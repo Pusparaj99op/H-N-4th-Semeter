@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Practical 11 – DNS Configuration</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Times New Roman', Times, serif; font-size: 11pt; background: #dce3ed; padding: 15px; }
+    .page { width: 210mm; margin: 0 auto; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.3); padding: 15mm 18mm; }
+    .header { border: 3px double #000; padding: 10px 14px; text-align: center; margin-bottom: 14px; }
+    .clg { font-size: 15pt; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+    .dept { font-size: 11.5pt; margin: 4px 0 2px; }
+    .subj { font-size: 10.5pt; }
+    hr.t { border: none; border-top: 2px solid #000; margin: 7px 0; }
+    .meta { display: flex; justify-content: space-between; font-size: 10pt; }
+    .prac-no { font-size: 13pt; font-weight: bold; text-align: center; text-decoration: underline; margin: 14px 0 10px; }
+    h3 { font-size: 11.5pt; font-weight: bold; text-decoration: underline; text-transform: uppercase; margin: 13px 0 5px; }
+    p { font-size: 10.5pt; line-height: 1.7; text-align: justify; margin-bottom: 4px; }
+    ul, ol { padding-left: 22px; margin: 4px 0; }
+    li { font-size: 10.5pt; line-height: 1.65; margin-bottom: 3px; text-align: justify; }
+    .result { border: 2px solid #000; padding: 10px; margin-top: 4px; background: #fafafa; }
+    .sigs { display: flex; justify-content: space-between; margin-top: 30px; font-size: 10.5pt; padding-top: 10px; border-top: 1px solid #000; }
+    table { width: 100%; border-collapse: collapse; margin: 7px 0; font-size: 10pt; }
+    th, td { border: 1px solid #000; padding: 5px 8px; }
+    th { background: #dde3ed; text-align: center; font-weight: bold; }
+    td { text-align: center; }
+    td.left { text-align: left; }
+    .cmd { font-family: Consolas, 'Courier New', monospace; background: #f0f0f0; border: 1px solid #bbb; padding: 1px 5px; font-size: 9.5pt; color: #1a1a6e; }
+    .resolution-box { display: flex; align-items: center; justify-content: center; gap: 5px; margin: 8px 0; flex-wrap: wrap; font-size: 10pt; }
+    .rb { border: 2px solid #1a3c8f; padding: 6px 10px; background: #eef2fb; text-align: center; min-width: 95px; }
+    .arrow { font-size: 14pt; color: #1a3c8f; }
+    .print-btn { display: block; margin: 14px auto 0; padding: 7px 22px; background: #1a3c8f; color: #fff; border: none; border-radius: 4px; font-size: 10.5pt; cursor: pointer; }
+    .back-link { font-size: 10pt; margin-bottom: 10px; display: block; }
+    @media print {
+      body { background: #fff; padding: 0; }
+      .page { margin: 0; padding: 12mm 15mm; box-shadow: none; }
+      .print-btn, .back-link { display: none; }
+      @page { size: A4; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <a class="back-link" href="../index.html">&larr; Back to Index</a>
+
+  <div class="header">
+    <div class="clg">Your Engineering College Name</div>
+    <div class="dept">Department of Computer Science &amp; Engineering</div>
+    <div class="subj">Hardware &amp; Networking Lab &nbsp;|&nbsp; B.Tech CSE – 4th Semester</div>
+    <hr class="t">
+    <div class="meta">
+      <span>Name: <b>Pranay K Gajbhiye</b></span>
+      <span>Roll No: ___________</span>
+      <span>Batch: ___________</span>
+      <span>Date: ___________</span>
+    </div>
+  </div>
+
+  <div class="prac-no">Practical No. 11 – DNS Configuration and Study</div>
+
+  <h3>Aim</h3>
+  <p>To study the Domain Name System (DNS), understand the DNS resolution process, configure a DNS server in Cisco Packet Tracer, and verify name-to-IP resolution from client machines using <span class="cmd">nslookup</span> and <span class="cmd">ping</span>.</p>
+
+  <h3>Theory</h3>
+  <p><b>DNS – Domain Name System:</b> A hierarchical, distributed database that translates human-readable domain names (e.g., <i>www.google.com</i>) into machine-readable IP addresses (e.g., 142.250.195.100) and vice versa. It operates on <b>UDP port 53</b> (and TCP port 53 for larger responses). DNS is essential for the usability of the internet — without it, users would need to remember numeric IP addresses.</p>
+
+  <p><b>DNS Record Types:</b></p>
+  <table>
+    <tr>
+      <th>Record Type</th>
+      <th>Full Name</th>
+      <th class="left">Purpose / Example</th>
+    </tr>
+    <tr><td>A</td><td>Address Record</td><td class="left">Maps a hostname → IPv4 address. e.g., www.abc.com → 192.168.1.100</td></tr>
+    <tr><td>AAAA</td><td>IPv6 Address Record</td><td class="left">Maps a hostname → IPv6 address</td></tr>
+    <tr><td>CNAME</td><td>Canonical Name</td><td class="left">Alias record; maps one hostname to another. e.g., mail.abc.com → abc.com</td></tr>
+    <tr><td>MX</td><td>Mail Exchange</td><td class="left">Specifies the mail server for a domain</td></tr>
+    <tr><td>NS</td><td>Name Server</td><td class="left">Specifies the authoritative DNS server for a domain</td></tr>
+    <tr><td>PTR</td><td>Pointer Record</td><td class="left">Reverse DNS lookup: maps IP → hostname</td></tr>
+    <tr><td>SOA</td><td>Start of Authority</td><td class="left">Administrative info about a DNS zone</td></tr>
+  </table>
+
+  <p><b>DNS Hierarchy and Resolution Process:</b></p>
+  <p>When a user types <i>www.google.com</i> in a browser, DNS resolution occurs in the following order:</p>
+  <div class="resolution-box">
+    <div class="rb"><b>1. Browser Cache</b><br><small>Checks local browser DNS cache</small></div>
+    <span class="arrow">→</span>
+    <div class="rb"><b>2. OS Cache</b><br><small>Checks OS/hosts file DNS cache</small></div>
+    <span class="arrow">→</span>
+    <div class="rb"><b>3. Recursive Resolver</b><br><small>Typically your ISP's or configured DNS (e.g. 8.8.8.8)</small></div>
+    <span class="arrow">→</span>
+    <div class="rb"><b>4. Root Server</b><br><small>Refers to TLD (.com) server</small></div>
+    <span class="arrow">→</span>
+    <div class="rb"><b>5. TLD Server</b><br><small>Refers to google.com authoritative server</small></div>
+    <span class="arrow">→</span>
+    <div class="rb"><b>6. Authoritative Server</b><br><small>Returns the IP address for www.google.com</small></div>
+  </div>
+
+  <p><b>hosts File:</b> A local text file (C:\Windows\System32\drivers\etc\hosts on Windows) that can be manually edited to map hostnames to IP addresses, bypassing DNS. It is checked before DNS queries. Priority: hosts file &gt; DNS cache &gt; DNS server.</p>
+
+  <p><b>Public DNS Servers:</b></p>
+  <table>
+    <tr><th>Provider</th><th>Primary DNS</th><th>Secondary DNS</th></tr>
+    <tr><td>Google</td><td>8.8.8.8</td><td>8.8.4.4</td></tr>
+    <tr><td>Cloudflare</td><td>1.1.1.1</td><td>1.0.0.1</td></tr>
+    <tr><td>OpenDNS</td><td>208.67.222.222</td><td>208.67.220.220</td></tr>
+  </table>
+
+  <h3>Apparatus / Requirements</h3>
+  <ul>
+    <li>Cisco Packet Tracer software</li>
+    <li>1 Server-PT (DNS Server), 1 Switch, 3 PC devices</li>
+    <li>Straight-through cables</li>
+    <li>Computer with internet access (for live nslookup demonstration)</li>
+    <li>Command Prompt (Windows)</li>
+  </ul>
+
+  <h3>Procedure</h3>
+  <p><b>Part A — Configure DNS in Cisco Packet Tracer:</b></p>
+  <ol>
+    <li>Open Cisco Packet Tracer and create a new topology:
+      <ul>
+        <li>Add 1 Server-PT, 1 Switch (2960), and 3 PCs. Connect all to the switch.</li>
+      </ul>
+    </li>
+    <li><b>Configure the DNS Server's static IP:</b>
+      <ul>
+        <li>Click Server → Desktop → IP Configuration → Static.</li>
+        <li>IP: <b>192.168.1.1</b>, Subnet: <b>255.255.255.0</b>, Gateway: <b>192.168.1.1</b>.</li>
+      </ul>
+    </li>
+    <li><b>Configure the DNS Service on the Server:</b>
+      <ul>
+        <li>Click Server → Services → DNS. Turn the DNS service <b>ON</b>.</li>
+        <li>Add DNS records (A Records):
+          <ul>
+            <li>Name: <b>www.pranay.com</b> → Address: <b>192.168.1.10</b> → Click <b>Add</b></li>
+            <li>Name: <b>www.college.com</b> → Address: <b>192.168.1.20</b> → Click <b>Add</b></li>
+          </ul>
+        </li>
+        <li>Click <b>Save</b>.</li>
+      </ul>
+    </li>
+    <li><b>Configure PC1 (client):</b>
+      <ul>
+        <li>IP: <b>192.168.1.10</b>, Subnet: 255.255.255.0, Gateway: 192.168.1.1, DNS: <b>192.168.1.1</b>.</li>
+      </ul>
+    </li>
+    <li><b>Configure PC2:</b> IP: 192.168.1.20, same subnet/gateway/DNS.</li>
+    <li><b>Configure PC3:</b> IP: 192.168.1.30, same subnet/gateway/DNS.</li>
+    <li><b>Test DNS Resolution from PC3:</b>
+      <ul>
+        <li>Desktop → Command Prompt → type: <span class="cmd">ping www.pranay.com</span></li>
+        <li>DNS should resolve to 192.168.1.10 and ping should succeed.</li>
+        <li>Type: <span class="cmd">nslookup www.college.com</span> → Should return 192.168.1.20.</li>
+      </ul>
+    </li>
+  </ol>
+
+  <p><b>Part B — Live DNS Commands (Windows CMD):</b></p>
+  <ol>
+    <li>Open CMD. Type <span class="cmd">nslookup www.google.com</span> — note the resolved IP address and which DNS server answered.</li>
+    <li>Type <span class="cmd">nslookup 8.8.8.8</span> — observe the reverse DNS (PTR) lookup result.</li>
+    <li>Type <span class="cmd">ipconfig /displaydns</span> — view the local DNS resolver cache entries.</li>
+    <li>Type <span class="cmd">ipconfig /flushdns</span> — clear the DNS cache. Confirm with <span class="cmd">ipconfig /displaydns</span> again.</li>
+    <li>Open Notepad as Administrator. Open the hosts file at <span class="cmd">C:\Windows\System32\drivers\etc\hosts</span>. Add a test entry: <span class="cmd">192.168.1.100  testsite.local</span>. Save.</li>
+    <li>In CMD, run <span class="cmd">ping testsite.local</span> — it should resolve to 192.168.1.100 from the hosts file, bypassing DNS.</li>
+    <li>Remove the test entry from the hosts file after verification.</li>
+  </ol>
+
+  <h3>Result</h3>
+  <div class="result">
+    <p>The DNS protocol was studied in detail — its structure, record types, and step-by-step resolution process were understood. A DNS server was successfully configured in Cisco Packet Tracer with two A records. Client PCs resolved hostnames (www.pranay.com, www.college.com) to their correct IP addresses using the configured DNS server. Live DNS commands (<span class="cmd">nslookup</span>, <span class="cmd">ipconfig /displaydns</span>, <span class="cmd">ipconfig /flushdns</span>) were also demonstrated on a Windows machine.</p>
+  </div>
+
+  <div class="sigs">
+    <span>Student Signature: ___________________________</span>
+    <span>Teacher Signature: ___________________________</span>
+    <span>Marks: _______ / 10</span>
+  </div>
+
+  <button class="print-btn" onclick="window.print()">&#128438; Print This Practical</button>
+</div>
+</body>
+</html>
