@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Practical 01 – Network Topologies</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Times New Roman', Times, serif; font-size: 11pt; background: #dce3ed; padding: 15px; }
+    .page { width: 210mm; margin: 0 auto; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.3); padding: 15mm 18mm; }
+    .header { border: 3px double #000; padding: 10px 14px; text-align: center; margin-bottom: 14px; }
+    .clg { font-size: 15pt; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+    .dept { font-size: 11.5pt; margin: 4px 0 2px; }
+    .subj { font-size: 10.5pt; }
+    hr.t { border: none; border-top: 2px solid #000; margin: 7px 0; }
+    hr.s { border: none; border-top: 1px solid #000; margin: 5px 0; }
+    .meta { display: flex; justify-content: space-between; font-size: 10pt; }
+    .prac-no { font-size: 13pt; font-weight: bold; text-align: center; text-decoration: underline; margin: 14px 0 10px; }
+    h3 { font-size: 11.5pt; font-weight: bold; text-decoration: underline; text-transform: uppercase; margin: 13px 0 5px; }
+    p { font-size: 10.5pt; line-height: 1.7; text-align: justify; margin-bottom: 4px; }
+    ul, ol { padding-left: 22px; margin: 4px 0; }
+    li { font-size: 10.5pt; line-height: 1.65; margin-bottom: 3px; text-align: justify; }
+    .result { border: 2px solid #000; padding: 10px; margin-top: 4px; background: #fafafa; }
+    .sigs { display: flex; justify-content: space-between; margin-top: 30px; font-size: 10.5pt; padding-top: 10px; border-top: 1px solid #000; }
+    table { width: 100%; border-collapse: collapse; margin: 7px 0; font-size: 10pt; }
+    th, td { border: 1px solid #000; padding: 5px 8px; }
+    th { background: #dde3ed; text-align: center; font-weight: bold; }
+    b { }
+    .print-btn { display: block; margin: 14px auto 0; padding: 7px 22px; background: #1a3c8f; color: #fff; border: none; border-radius: 4px; font-size: 10.5pt; cursor: pointer; }
+    .back-link { font-size: 10pt; margin-bottom: 10px; display: block; }
+    @media print {
+      body { background: #fff; padding: 0; }
+      .page { margin: 0; padding: 12mm 15mm; box-shadow: none; }
+      .print-btn, .back-link { display: none; }
+      @page { size: A4; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <a class="back-link no-print" href="../index.html">&larr; Back to Index</a>
+
+  <div class="header">
+    <div class="clg">Your Engineering College Name</div>
+    <div class="dept">Department of Computer Science &amp; Engineering</div>
+    <div class="subj">Hardware &amp; Networking Lab &nbsp;|&nbsp; B.Tech CSE – 4th Semester</div>
+    <hr class="t">
+    <div class="meta">
+      <span>Name: <b>Pranay K Gajbhiye</b></span>
+      <span>Roll No: ___________</span>
+      <span>Batch: ___________</span>
+      <span>Date: ___________</span>
+    </div>
+  </div>
+
+  <div class="prac-no">Practical No. 01 – Study of Network Topologies</div>
+
+  <h3>Aim</h3>
+  <p>To study and understand different types of computer network topologies along with their characteristics, advantages, and disadvantages.</p>
+
+  <h3>Theory</h3>
+  <p>A <b>network topology</b> is the physical or logical arrangement of nodes and connections in a network. Choosing the right topology affects cost, performance, scalability, and fault tolerance.</p>
+
+  <p><b>1. Bus Topology</b></p>
+  <p>All devices are connected to a single shared cable called the <i>bus</i> or <i>backbone</i>. Data is sent in both directions and received by all devices; only the intended recipient accepts it. A terminator at each end prevents signal reflection.</p>
+  <ul>
+    <li><b>Advantages:</b> Easy and inexpensive to install; requires less cable than other topologies.</li>
+    <li><b>Disadvantages:</b> A break in the main cable brings down the entire network; performance degrades as more devices are added; limited cable length.</li>
+    <li><b>Used in:</b> Early Ethernet (10Base2 coaxial) networks.</li>
+  </ul>
+
+  <p><b>2. Star Topology</b></p>
+  <p>All devices connect to a central hub or switch. The central device manages all data transmission. This is the most widely used LAN topology today.</p>
+  <ul>
+    <li><b>Advantages:</b> Easy to install, manage, and troubleshoot; failure of one device does not affect others; easy to add/remove devices.</li>
+    <li><b>Disadvantages:</b> If the central hub/switch fails, the entire network goes down; requires more cable than bus topology.</li>
+    <li><b>Used in:</b> Modern Ethernet LANs with managed switches.</li>
+  </ul>
+
+  <p><b>3. Ring Topology</b></p>
+  <p>Each device is connected to exactly two neighbouring devices forming a closed loop. Data travels in one direction using a <i>token-passing</i> mechanism; a device transmits only when it holds the token.</p>
+  <ul>
+    <li><b>Advantages:</b> Equal access for all devices; performs well under heavy traffic load.</li>
+    <li><b>Disadvantages:</b> Failure of any single node can break the ring; difficult to diagnose faults; adding/removing devices disrupts the network.</li>
+    <li><b>Used in:</b> Token Ring (IEEE 802.5), FDDI networks.</li>
+  </ul>
+
+  <p><b>4. Mesh Topology</b></p>
+  <p>Every device is connected to every other device directly (full mesh). Partial mesh connects only some devices. Number of connections in full mesh = n(n−1)/2.</p>
+  <ul>
+    <li><b>Advantages:</b> Highly reliable and fault-tolerant; no single point of failure; data can be routed around failures.</li>
+    <li><b>Disadvantages:</b> Very expensive; complex installation and configuration; high cabling cost.</li>
+    <li><b>Used in:</b> WANs, backbone networks, military communication.</li>
+  </ul>
+
+  <p><b>5. Tree (Hierarchical) Topology</b></p>
+  <p>A combination of star and bus topologies. Multiple star-configured networks are connected to a common bus backbone. Devices are arranged in a hierarchical parent-child relationship.</p>
+  <ul>
+    <li><b>Advantages:</b> Easily scalable; fault isolation is straightforward; high-priority devices can be located near the root.</li>
+    <li><b>Disadvantages:</b> Failure of the backbone affects the entire network; can become complex as it grows.</li>
+    <li><b>Used in:</b> Corporate networks, campus networks.</li>
+  </ul>
+
+  <p><b>6. Hybrid Topology</b></p>
+  <p>A combination of two or more different topologies (e.g., Star-Bus, Star-Ring). Organizations use hybrid topologies to leverage the advantages of multiple types.</p>
+  <ul>
+    <li><b>Advantages:</b> Highly flexible and scalable; best features of component topologies can be utilized.</li>
+    <li><b>Disadvantages:</b> Complex design; expensive to install and manage.</li>
+    <li><b>Used in:</b> Large enterprise and university campus networks.</li>
+  </ul>
+
+  <table>
+    <tr>
+      <th>Topology</th>
+      <th>Central Device</th>
+      <th>Cable Required</th>
+      <th>Fault Tolerance</th>
+      <th>Cost</th>
+    </tr>
+    <tr><td>Bus</td><td>None</td><td>Low</td><td>Low</td><td>Low</td></tr>
+    <tr><td>Star</td><td>Hub / Switch</td><td>Medium</td><td>Medium</td><td>Medium</td></tr>
+    <tr><td>Ring</td><td>None / MAU</td><td>Medium</td><td>Low</td><td>Medium</td></tr>
+    <tr><td>Mesh</td><td>None</td><td>Very High</td><td>Very High</td><td>Very High</td></tr>
+    <tr><td>Tree</td><td>Root Switch</td><td>Medium–High</td><td>Medium</td><td>Medium–High</td></tr>
+    <tr><td>Hybrid</td><td>Multiple</td><td>Varies</td><td>High</td><td>High</td></tr>
+  </table>
+
+  <h3>Apparatus / Requirements</h3>
+  <ul>
+    <li>Computer System with Windows OS</li>
+    <li>Cisco Packet Tracer / GNS3 (network simulation software)</li>
+    <li>Microsoft Visio or Draw.io (topology diagrams)</li>
+    <li>Pen and paper for manual sketches</li>
+  </ul>
+
+  <h3>Procedure</h3>
+  <ol>
+    <li>Open Cisco Packet Tracer on the computer.</li>
+    <li>Create a new project workspace (File → New).</li>
+    <li><b>Bus Topology:</b> Place 5 PCs from the device panel. Connect them all in a line to a single hub simulating a bus. Add labels.</li>
+    <li><b>Star Topology:</b> Place 1 Switch and 5 PCs. Connect each PC to the switch using a straight-through cable. Label all devices.</li>
+    <li><b>Ring Topology:</b> Place 5 PCs. Connect PC1→PC2→PC3→PC4→PC5→PC1 forming a closed loop.</li>
+    <li><b>Mesh Topology:</b> Place 4 PCs. Draw a direct connection from every PC to every other PC (6 connections total).</li>
+    <li><b>Tree Topology:</b> Create two star sub-networks (each with 3 PCs and a switch), then connect both switches to a root switch.</li>
+    <li><b>Hybrid Topology:</b> Combine the star and bus topologies by connecting the star switch to a bus backbone.</li>
+    <li>Label all devices and connections in every diagram.</li>
+    <li>Save each topology as a separate Packet Tracer file.</li>
+    <li>Note down the advantages, disadvantages, and real-world use case for each topology.</li>
+  </ol>
+
+  <h3>Result</h3>
+  <div class="result">
+    <p>All six types of computer network topologies — Bus, Star, Ring, Mesh, Tree, and Hybrid — were successfully studied, drawn, and simulated using Cisco Packet Tracer. Their structure, working principles, advantages, disadvantages, and use cases were understood and documented.</p>
+  </div>
+
+  <div class="sigs">
+    <span>Student Signature: ___________________________</span>
+    <span>Teacher Signature: ___________________________</span>
+    <span>Marks: _______ / 10</span>
+  </div>
+
+  <button class="print-btn" onclick="window.print()">&#128438; Print This Practical</button>
+</div>
+</body>
+</html>
