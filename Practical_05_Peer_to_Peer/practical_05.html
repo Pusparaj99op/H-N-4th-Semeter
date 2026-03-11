@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Practical 05 – Peer-to-Peer Network Setup</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Times New Roman', Times, serif; font-size: 11pt; background: #dce3ed; padding: 15px; }
+    .page { width: 210mm; margin: 0 auto; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.3); padding: 15mm 18mm; }
+    .header { border: 3px double #000; padding: 10px 14px; text-align: center; margin-bottom: 14px; }
+    .clg { font-size: 15pt; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+    .dept { font-size: 11.5pt; margin: 4px 0 2px; }
+    .subj { font-size: 10.5pt; }
+    hr.t { border: none; border-top: 2px solid #000; margin: 7px 0; }
+    .meta { display: flex; justify-content: space-between; font-size: 10pt; }
+    .prac-no { font-size: 13pt; font-weight: bold; text-align: center; text-decoration: underline; margin: 14px 0 10px; }
+    h3 { font-size: 11.5pt; font-weight: bold; text-decoration: underline; text-transform: uppercase; margin: 13px 0 5px; }
+    p { font-size: 10.5pt; line-height: 1.7; text-align: justify; margin-bottom: 4px; }
+    ul, ol { padding-left: 22px; margin: 4px 0; }
+    li { font-size: 10.5pt; line-height: 1.65; margin-bottom: 3px; text-align: justify; }
+    .result { border: 2px solid #000; padding: 10px; margin-top: 4px; background: #fafafa; }
+    .sigs { display: flex; justify-content: space-between; margin-top: 30px; font-size: 10.5pt; padding-top: 10px; border-top: 1px solid #000; }
+    table { width: 100%; border-collapse: collapse; margin: 7px 0; font-size: 10pt; }
+    th, td { border: 1px solid #000; padding: 5px 8px; text-align: center; }
+    th { background: #dde3ed; font-weight: bold; }
+    td.left { text-align: left; }
+    .cmd { font-family: Consolas, 'Courier New', monospace; background: #f0f0f0; border: 1px solid #bbb; padding: 1px 5px; font-size: 9.5pt; color: #1a1a6e; }
+    .print-btn { display: block; margin: 14px auto 0; padding: 7px 22px; background: #1a3c8f; color: #fff; border: none; border-radius: 4px; font-size: 10.5pt; cursor: pointer; }
+    .back-link { font-size: 10pt; margin-bottom: 10px; display: block; }
+    @media print {
+      body { background: #fff; padding: 0; }
+      .page { margin: 0; padding: 12mm 15mm; box-shadow: none; }
+      .print-btn, .back-link { display: none; }
+      @page { size: A4; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <a class="back-link" href="../index.html">&larr; Back to Index</a>
+
+  <div class="header">
+    <div class="clg">Your Engineering College Name</div>
+    <div class="dept">Department of Computer Science &amp; Engineering</div>
+    <div class="subj">Hardware &amp; Networking Lab &nbsp;|&nbsp; B.Tech CSE – 4th Semester</div>
+    <hr class="t">
+    <div class="meta">
+      <span>Name: <b>Pranay K Gajbhiye</b></span>
+      <span>Roll No: ___________</span>
+      <span>Batch: ___________</span>
+      <span>Date: ___________</span>
+    </div>
+  </div>
+
+  <div class="prac-no">Practical No. 05 – Setting up a Peer-to-Peer (P2P) Network</div>
+
+  <h3>Aim</h3>
+  <p>To establish a Peer-to-Peer (P2P) network between two computers, configure static IP addresses, enable file sharing, and verify resource sharing between the peers.</p>
+
+  <h3>Theory</h3>
+  <p><b>Peer-to-Peer (P2P) Network:</b> A network architecture in which every workstation (peer) has equal capabilities and can act as both a client and a server. No dedicated central server is required.</p>
+
+  <p><b>Key Characteristics:</b></p>
+  <ul>
+    <li>Each computer controls its own resources and user accounts.</li>
+    <li>Resources (files, printers, internet) can be shared directly between peers.</li>
+    <li>Best suited for small networks of 2–10 computers.</li>
+    <li>All computers must be in the same <b>Workgroup</b> (default: WORKGROUP).</li>
+  </ul>
+
+  <table>
+    <tr><th></th><th>Peer-to-Peer Network</th><th>Client-Server Network</th></tr>
+    <tr><td class="left"><b>Cost</b></td><td>Low</td><td>High (dedicated server)</td></tr>
+    <tr><td class="left"><b>Security</b></td><td>Decentralised (weak)</td><td>Centralised (strong)</td></tr>
+    <tr><td class="left"><b>Scalability</b></td><td>Low (up to ~10 PCs)</td><td>High</td></tr>
+    <tr><td class="left"><b>Administration</b></td><td>Each user manages own PC</td><td>Central administrator</td></tr>
+    <tr><td class="left"><b>Best For</b></td><td>Home / small office</td><td>Large organisations</td></tr>
+  </table>
+
+  <p><b>Connection Methods for P2P:</b></p>
+  <ul>
+    <li><b>Direct Connection:</b> Using a Cross-Over UTP cable between two PCs' Ethernet ports.</li>
+    <li><b>Via Switch/Hub:</b> Both PCs connected to a common switch using straight-through cables.</li>
+    <li><b>Wireless:</b> Using the same Wi-Fi network or an ad-hoc wireless connection.</li>
+  </ul>
+
+  <p><b>IP Configuration for P2P:</b> Both PCs must have IP addresses on the same subnet and no default gateway is strictly required. Example: PC1 = 192.168.1.1/24 and PC2 = 192.168.1.2/24.</p>
+
+  <h3>Apparatus / Requirements</h3>
+  <ul>
+    <li>2 Computer systems running Windows OS</li>
+    <li>1 Cross-Over UTP cable (for direct connection) <b>OR</b> 1 Switch + 2 Straight-Through cables</li>
+    <li>Network Interface Cards (NICs) in both computers</li>
+    <li>A test folder/file to transfer between the computers</li>
+  </ul>
+
+  <h3>Procedure</h3>
+  <ol>
+    <li><b>Physical Setup:</b>
+      <ul>
+        <li>Connect the two PCs using a crossover cable directly, <b>OR</b></li>
+        <li>Connect both PCs to a network switch using straight-through cables.</li>
+      </ul>
+    </li>
+
+    <li><b>Set a Static IP on PC1:</b>
+      <ul>
+        <li>Go to <b>Control Panel → Network and Sharing Center → Change adapter settings</b>.</li>
+        <li>Right-click the Ethernet adapter → <b>Properties</b> → Select <b>IPv4</b> → <b>Properties</b>.</li>
+        <li>Set: IP = <b>192.168.1.1</b>, Subnet Mask = <b>255.255.255.0</b>. Leave Gateway blank. Click <b>OK</b>.</li>
+      </ul>
+    </li>
+
+    <li><b>Set a Static IP on PC2:</b>
+      <ul>
+        <li>Repeat the same steps on PC2.</li>
+        <li>Set: IP = <b>192.168.1.2</b>, Subnet Mask = <b>255.255.255.0</b>. Click <b>OK</b>.</li>
+      </ul>
+    </li>
+
+    <li><b>Set Same Workgroup on Both PCs:</b>
+      <ul>
+        <li>Right-click <b>This PC</b> → <b>Properties</b> → <b>Change settings</b> → <b>Change</b>.</li>
+        <li>Ensure both PCs have the same Workgroup name (e.g., <b>WORKGROUP</b>). Restart if changed.</li>
+      </ul>
+    </li>
+
+    <li><b>Test Connectivity:</b>
+      <ul>
+        <li>On PC1, open CMD and run: <span class="cmd">ping 192.168.1.2</span></li>
+        <li>If 4 packets are received with 0% loss, the connection is successful.</li>
+      </ul>
+    </li>
+
+    <li><b>Enable Network Discovery &amp; File Sharing:</b>
+      <ul>
+        <li>On both PCs: <b>Control Panel → Network and Sharing Center → Change advanced sharing settings</b>.</li>
+        <li>Under the <b>Private</b> profile, turn on <b>Network discovery</b> and <b>File and printer sharing</b>.</li>
+        <li>Click <b>Save changes</b>.</li>
+      </ul>
+    </li>
+
+    <li><b>Share a Folder from PC1:</b>
+      <ul>
+        <li>Create a folder (e.g., <b>C:\P2P_Share</b>). Place a test file inside it.</li>
+        <li>Right-click the folder → <b>Properties → Sharing → Share…</b></li>
+        <li>Add <b>Everyone</b>, set permission to <b>Read/Write</b> → click <b>Share</b>.</li>
+        <li>Note the network path shown (e.g., <b>\\PC1\P2P_Share</b>).</li>
+      </ul>
+    </li>
+
+    <li><b>Access Shared Folder from PC2:</b>
+      <ul>
+        <li>Open <b>File Explorer</b> on PC2. In the address bar type: <span class="cmd">\\192.168.1.1</span> and press Enter.</li>
+        <li>The shared folder from PC1 should be visible. Open it and copy/paste a test file.</li>
+      </ul>
+    </li>
+
+    <li>Verify the file is transferred successfully on both machines. Document the output.</li>
+  </ol>
+
+  <h3>Result</h3>
+  <div class="result">
+    <p>A Peer-to-Peer network was successfully established between two computers. Static IP addresses (192.168.1.1 and 192.168.1.2) were configured on both machines. Connectivity was verified using the ping command with 0% packet loss. File sharing was enabled and a folder was successfully shared and accessed from the remote peer, confirming bidirectional resource sharing over the P2P network.</p>
+  </div>
+
+  <div class="sigs">
+    <span>Student Signature: ___________________________</span>
+    <span>Teacher Signature: ___________________________</span>
+    <span>Marks: _______ / 10</span>
+  </div>
+
+  <button class="print-btn" onclick="window.print()">&#128438; Print This Practical</button>
+</div>
+</body>
+</html>
