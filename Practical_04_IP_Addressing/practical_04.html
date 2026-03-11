@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Practical 04 – IP Addressing and Subnetting</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Times New Roman', Times, serif; font-size: 11pt; background: #dce3ed; padding: 15px; }
+    .page { width: 210mm; margin: 0 auto; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.3); padding: 15mm 18mm; }
+    .header { border: 3px double #000; padding: 10px 14px; text-align: center; margin-bottom: 14px; }
+    .clg { font-size: 15pt; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+    .dept { font-size: 11.5pt; margin: 4px 0 2px; }
+    .subj { font-size: 10.5pt; }
+    hr.t { border: none; border-top: 2px solid #000; margin: 7px 0; }
+    .meta { display: flex; justify-content: space-between; font-size: 10pt; }
+    .prac-no { font-size: 13pt; font-weight: bold; text-align: center; text-decoration: underline; margin: 14px 0 10px; }
+    h3 { font-size: 11.5pt; font-weight: bold; text-decoration: underline; text-transform: uppercase; margin: 13px 0 5px; }
+    p { font-size: 10.5pt; line-height: 1.7; text-align: justify; margin-bottom: 4px; }
+    ul, ol { padding-left: 22px; margin: 4px 0; }
+    li { font-size: 10.5pt; line-height: 1.65; margin-bottom: 3px; text-align: justify; }
+    .result { border: 2px solid #000; padding: 10px; margin-top: 4px; background: #fafafa; }
+    .sigs { display: flex; justify-content: space-between; margin-top: 30px; font-size: 10.5pt; padding-top: 10px; border-top: 1px solid #000; }
+    table { width: 100%; border-collapse: collapse; margin: 7px 0; font-size: 10pt; }
+    th, td { border: 1px solid #000; padding: 5px 8px; text-align: center; }
+    th { background: #dde3ed; font-weight: bold; }
+    td.left { text-align: left; }
+    .cmd { font-family: Consolas, 'Courier New', monospace; background: #f0f0f0; border: 1px solid #bbb; padding: 1px 5px; font-size: 9.5pt; color: #1a1a6e; }
+    .formula { font-family: Consolas, monospace; background: #fff8dc; border: 1px solid #cca; padding: 3px 8px; display: inline-block; margin: 3px 0; }
+    .print-btn { display: block; margin: 14px auto 0; padding: 7px 22px; background: #1a3c8f; color: #fff; border: none; border-radius: 4px; font-size: 10.5pt; cursor: pointer; }
+    .back-link { font-size: 10pt; margin-bottom: 10px; display: block; }
+    @media print {
+      body { background: #fff; padding: 0; }
+      .page { margin: 0; padding: 12mm 15mm; box-shadow: none; }
+      .print-btn, .back-link { display: none; }
+      @page { size: A4; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <a class="back-link" href="../index.html">&larr; Back to Index</a>
+
+  <div class="header">
+    <div class="clg">Your Engineering College Name</div>
+    <div class="dept">Department of Computer Science &amp; Engineering</div>
+    <div class="subj">Hardware &amp; Networking Lab &nbsp;|&nbsp; B.Tech CSE – 4th Semester</div>
+    <hr class="t">
+    <div class="meta">
+      <span>Name: <b>Pranay K Gajbhiye</b></span>
+      <span>Roll No: ___________</span>
+      <span>Batch: ___________</span>
+      <span>Date: ___________</span>
+    </div>
+  </div>
+
+  <div class="prac-no">Practical No. 04 – IP Addressing and Subnetting</div>
+
+  <h3>Aim</h3>
+  <p>To understand IPv4 addressing, IP address classes, subnet masks, and to perform subnetting calculations. Also to manually configure static IP on a Windows system and verify connectivity.</p>
+
+  <h3>Theory</h3>
+  <p><b>IPv4 Address:</b> A 32-bit logical address assigned to every device on an IP network, written in dotted-decimal notation (e.g., 192.168.1.1). Each of the four groups (octets) ranges from 0 to 255.</p>
+
+  <p><b>Classes of IP Addresses:</b></p>
+  <table>
+    <tr>
+      <th>Class</th>
+      <th>Range (1st Octet)</th>
+      <th>Default Subnet Mask</th>
+      <th>CIDR</th>
+      <th>Max Hosts/Network</th>
+      <th>Use</th>
+    </tr>
+    <tr><td>A</td><td>1 – 126</td><td>255.0.0.0</td><td>/8</td><td>16,777,214</td><td>Large organisations</td></tr>
+    <tr><td>B</td><td>128 – 191</td><td>255.255.0.0</td><td>/16</td><td>65,534</td><td>Medium organisations</td></tr>
+    <tr><td>C</td><td>192 – 223</td><td>255.255.255.0</td><td>/24</td><td>254</td><td>Small networks</td></tr>
+    <tr><td>D</td><td>224 – 239</td><td>N/A</td><td>N/A</td><td>N/A</td><td>Multicast groups</td></tr>
+    <tr><td>E</td><td>240 – 255</td><td>N/A</td><td>N/A</td><td>N/A</td><td>Research / Reserved</td></tr>
+  </table>
+
+  <p><b>Private IP Address Ranges (RFC 1918):</b></p>
+  <ul>
+    <li>Class A: 10.0.0.0 – 10.255.255.255</li>
+    <li>Class B: 172.16.0.0 – 172.31.255.255</li>
+    <li>Class C: 192.168.0.0 – 192.168.255.255</li>
+  </ul>
+
+  <p><b>Subnet Mask:</b> A 32-bit number used to divide an IP address into Network and Host portions. Bits set to 1 represent the network, bits set to 0 represent hosts. Example: /24 = 255.255.255.0 in binary: 11111111.11111111.11111111.00000000</p>
+
+  <p><b>Subnetting:</b> The process of dividing a single network into smaller sub-networks to improve performance and security. Key formulas:</p>
+  <p class="formula">Number of Subnets = 2<sup>n</sup>&nbsp;&nbsp;(n = number of borrowed bits)</p>
+  <p class="formula">Hosts per Subnet = 2<sup>h</sup> – 2&nbsp;&nbsp;(h = remaining host bits; subtract 2 for network and broadcast addresses)</p>
+
+  <p><b>Subnetting Example:</b> Network: 192.168.10.0/24 — Divide into 4 equal subnets.</p>
+  <ul>
+    <li>Need 4 subnets → borrow 2 bits: 2² = 4</li>
+    <li>New CIDR: /26 &nbsp;|&nbsp; New Subnet Mask: 255.255.255.192</li>
+    <li>Block size: 256 – 192 = 64 &nbsp;|&nbsp; Hosts per subnet: 2⁶ – 2 = 62</li>
+  </ul>
+  <table>
+    <tr>
+      <th>Subnet #</th>
+      <th>Network Address</th>
+      <th>First Host</th>
+      <th>Last Host</th>
+      <th>Broadcast</th>
+    </tr>
+    <tr><td>1</td><td>192.168.10.0</td><td>192.168.10.1</td><td>192.168.10.62</td><td>192.168.10.63</td></tr>
+    <tr><td>2</td><td>192.168.10.64</td><td>192.168.10.65</td><td>192.168.10.126</td><td>192.168.10.127</td></tr>
+    <tr><td>3</td><td>192.168.10.128</td><td>192.168.10.129</td><td>192.168.10.190</td><td>192.168.10.191</td></tr>
+    <tr><td>4</td><td>192.168.10.192</td><td>192.168.10.193</td><td>192.168.10.254</td><td>192.168.10.255</td></tr>
+  </table>
+
+  <h3>Apparatus / Requirements</h3>
+  <ul>
+    <li>Computer System with Windows OS</li>
+    <li>Command Prompt (cmd.exe)</li>
+    <li>Scientific calculator / Subnet Calculator tool</li>
+    <li>Active LAN connection (for IP assignment and testing)</li>
+    <li>Cisco Packet Tracer (optional, for network simulation)</li>
+  </ul>
+
+  <h3>Procedure</h3>
+  <ol>
+    <li><b>Subnetting Exercise (Manual Calculation):</b>
+      <ul>
+        <li>Given network: 192.168.1.0/24. Task: divide into 8 subnets.</li>
+        <li>Borrow 3 bits (2³ = 8). New mask: /27 = 255.255.255.224.</li>
+        <li>Block size: 256 – 224 = 32. Hosts per subnet: 2⁵ – 2 = 30.</li>
+        <li>List all 8 subnets (0, 32, 64, 96, 128, 160, 192, 224) with their host ranges and broadcast addresses.</li>
+      </ul>
+    </li>
+    <li><b>Configure Static IP on Windows:</b>
+      <ul>
+        <li>Open <b>Control Panel → Network and Sharing Center → Change adapter settings</b>.</li>
+        <li>Right-click on the <b>Ethernet</b> adapter → <b>Properties</b>.</li>
+        <li>Select <b>Internet Protocol Version 4 (TCP/IPv4)</b> → click <b>Properties</b>.</li>
+        <li>Select <b>"Use the following IP address"</b>.</li>
+        <li>Enter: IP = 192.168.1.10; Subnet Mask = 255.255.255.0; Default Gateway = 192.168.1.1.</li>
+        <li>Enter Preferred DNS: 8.8.8.8 (Google DNS). Click <b>OK</b>.</li>
+      </ul>
+    </li>
+    <li>Open Command Prompt. Type <span class="cmd">ipconfig</span> to verify the configured IP address.</li>
+    <li>Ping the default gateway: <span class="cmd">ping 192.168.1.1</span> to verify local connectivity.</li>
+    <li>Ping another device on the same subnet to confirm end-to-end reachability.</li>
+    <li>Type <span class="cmd">ipconfig /all</span> — note the IPv4 address, subnet mask, and gateway settings.</li>
+    <li>After the experiment, restore the adapter to <b>"Obtain an IP address automatically"</b> (DHCP).</li>
+    <li>Document all subnet tables and screenshot of ipconfig output.</li>
+  </ol>
+
+  <h3>Result</h3>
+  <div class="result">
+    <p>IPv4 address classes, subnet masks, and CIDR notation were studied. Subnetting calculations were successfully performed for 192.168.10.0/24 (into 4 subnets) and 192.168.1.0/24 (into 8 subnets). A static IP address was manually configured on a Windows system, and connectivity to the gateway was verified using the ping command.</p>
+  </div>
+
+  <div class="sigs">
+    <span>Student Signature: ___________________________</span>
+    <span>Teacher Signature: ___________________________</span>
+    <span>Marks: _______ / 10</span>
+  </div>
+
+  <button class="print-btn" onclick="window.print()">&#128438; Print This Practical</button>
+</div>
+</body>
+</html>
