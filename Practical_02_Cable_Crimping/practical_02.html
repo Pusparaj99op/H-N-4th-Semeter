@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Practical 02 – Network Cable Crimping</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Times New Roman', Times, serif; font-size: 11pt; background: #dce3ed; padding: 15px; }
+    .page { width: 210mm; margin: 0 auto; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.3); padding: 15mm 18mm; }
+    .header { border: 3px double #000; padding: 10px 14px; text-align: center; margin-bottom: 14px; }
+    .clg { font-size: 15pt; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+    .dept { font-size: 11.5pt; margin: 4px 0 2px; }
+    .subj { font-size: 10.5pt; }
+    hr.t { border: none; border-top: 2px solid #000; margin: 7px 0; }
+    .meta { display: flex; justify-content: space-between; font-size: 10pt; }
+    .prac-no { font-size: 13pt; font-weight: bold; text-align: center; text-decoration: underline; margin: 14px 0 10px; }
+    h3 { font-size: 11.5pt; font-weight: bold; text-decoration: underline; text-transform: uppercase; margin: 13px 0 5px; }
+    p { font-size: 10.5pt; line-height: 1.7; text-align: justify; margin-bottom: 4px; }
+    ul, ol { padding-left: 22px; margin: 4px 0; }
+    li { font-size: 10.5pt; line-height: 1.65; margin-bottom: 3px; text-align: justify; }
+    .result { border: 2px solid #000; padding: 10px; margin-top: 4px; background: #fafafa; }
+    .sigs { display: flex; justify-content: space-between; margin-top: 30px; font-size: 10.5pt; padding-top: 10px; border-top: 1px solid #000; }
+    table { width: 100%; border-collapse: collapse; margin: 7px 0; font-size: 10pt; }
+    th, td { border: 1px solid #000; padding: 5px 8px; text-align: center; }
+    th { background: #dde3ed; font-weight: bold; }
+    td.left { text-align: left; }
+    .print-btn { display: block; margin: 14px auto 0; padding: 7px 22px; background: #1a3c8f; color: #fff; border: none; border-radius: 4px; font-size: 10.5pt; cursor: pointer; }
+    .back-link { font-size: 10pt; margin-bottom: 10px; display: block; }
+    .color-box { display: inline-block; width: 14px; height: 14px; border: 1px solid #000; vertical-align: middle; margin-right: 4px; }
+    @media print {
+      body { background: #fff; padding: 0; }
+      .page { margin: 0; padding: 12mm 15mm; box-shadow: none; }
+      .print-btn, .back-link { display: none; }
+      @page { size: A4; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <a class="back-link" href="../index.html">&larr; Back to Index</a>
+
+  <div class="header">
+    <div class="clg">Your Engineering College Name</div>
+    <div class="dept">Department of Computer Science &amp; Engineering</div>
+    <div class="subj">Hardware &amp; Networking Lab &nbsp;|&nbsp; B.Tech CSE – 4th Semester</div>
+    <hr class="t">
+    <div class="meta">
+      <span>Name: <b>Pranay K Gajbhiye</b></span>
+      <span>Roll No: ___________</span>
+      <span>Batch: ___________</span>
+      <span>Date: ___________</span>
+    </div>
+  </div>
+
+  <div class="prac-no">Practical No. 02 – Network Cable Crimping (RJ-45)</div>
+
+  <h3>Aim</h3>
+  <p>To crimp RJ-45 Straight-Through and Cross-Over network cables using the T568A and T568B wiring standards, and to test them using a cable tester.</p>
+
+  <h3>Theory</h3>
+  <p><b>UTP (Unshielded Twisted Pair) Cable:</b> The most commonly used cable in Ethernet LANs. It contains 4 pairs of colour-coded twisted wires. The twisting reduces electromagnetic interference (EMI). Common categories: CAT5, CAT5e, CAT6, CAT6a.</p>
+
+  <p><b>RJ-45 Connector:</b> An 8-position, 8-contact (8P8C) modular connector used to terminate UTP Ethernet cables. The pin numbering is 1 to 8 from left to right when holding the connector with the tab facing down and the gold contacts facing towards you.</p>
+
+  <p><b>Wiring Standards (EIA/TIA 568):</b></p>
+  <table>
+    <tr>
+      <th>Pin</th>
+      <th>T568A (Wire Colour)</th>
+      <th>T568B (Wire Colour)</th>
+    </tr>
+    <tr><td>1</td><td>White / Green</td><td>White / Orange</td></tr>
+    <tr><td>2</td><td>Green</td><td>Orange</td></tr>
+    <tr><td>3</td><td>White / Orange</td><td>White / Green</td></tr>
+    <tr><td>4</td><td>Blue</td><td>Blue</td></tr>
+    <tr><td>5</td><td>White / Blue</td><td>White / Blue</td></tr>
+    <tr><td>6</td><td>Orange</td><td>Green</td></tr>
+    <tr><td>7</td><td>White / Brown</td><td>White / Brown</td></tr>
+    <tr><td>8</td><td>Brown</td><td>Brown</td></tr>
+  </table>
+
+  <p><b>Types of Patch Cables:</b></p>
+  <ul>
+    <li><b>Straight-Through Cable:</b> Both ends follow the same wiring standard (T568B – T568B). Used to connect <i>unlike</i> devices: PC to Switch, PC to Hub, Router to Switch.</li>
+    <li><b>Cross-Over Cable:</b> One end is T568A and the other end is T568B (pins 1&amp;2 and 3&amp;6 are crossed). Used to connect <i>like</i> devices: PC to PC, Switch to Switch, Hub to Hub.</li>
+  </ul>
+  <p><b>Note:</b> Modern network devices support Auto-MDI/MDI-X, which automatically detects the cable type and adjusts accordingly, making crossover cables less commonly needed today.</p>
+
+  <h3>Apparatus / Requirements</h3>
+  <ul>
+    <li>CAT5e or CAT6 UTP Cable – approximately 1.5 metres per cable</li>
+    <li>RJ-45 Connectors – minimum 4 pieces</li>
+    <li>RJ-45 Crimping Tool</li>
+    <li>Wire Stripper / Cable Cutter</li>
+    <li>Cable Tester (LAN cable tester / RJ-45 tester)</li>
+    <li>Scale / Ruler (for measuring strip length)</li>
+  </ul>
+
+  <h3>Procedure</h3>
+  <p><b>A. Straight-Through Cable (T568B – T568B):</b></p>
+  <ol>
+    <li>Cut approximately 1.5 m of UTP cable using the cutter.</li>
+    <li>Use the cable stripper to carefully remove about 3–4 cm of the outer plastic jacket from both ends. Avoid nicking the inner wire insulation.</li>
+    <li>Separate all 4 pairs and untwist each pair of wires.</li>
+    <li>Arrange and hold the 8 wires in the T568B order (left to right): <br>
+      <b>W/Orange – Orange – W/Green – Blue – W/Blue – Green – W/Brown – Brown</b></li>
+    <li>Hold the wires firmly between thumb and forefinger. Using the cutter, trim all 8 wires flat to about 12–14 mm from the jacket.</li>
+    <li>Hold the RJ-45 connector with the tab facing downward and carefully slide all 8 wires into the correct channels, ensuring each wire reaches the far end of the connector.</li>
+    <li>Place the connector firmly into the crimping tool and squeeze the handles fully until you hear a click.</li>
+    <li>Repeat steps 3–7 for the second end, using the same T568B order.</li>
+  </ol>
+
+  <p><b>B. Cross-Over Cable (T568A – T568B):</b></p>
+  <ol>
+    <li>Prepare a fresh piece of cable as above.</li>
+    <li>For <b>End 1</b>: arrange and crimp wires in <b>T568A</b> order: <br>
+      <b>W/Green – Green – W/Orange – Blue – W/Blue – Orange – W/Brown – Brown</b></li>
+    <li>For <b>End 2</b>: arrange and crimp wires in <b>T568B</b> order (same as straight-through).</li>
+  </ol>
+
+  <p><b>C. Testing with Cable Tester:</b></p>
+  <ol>
+    <li>Insert one end of the completed cable into the "Main" port of the cable tester, and the other end into the "Remote" port.</li>
+    <li>Turn the tester ON.</li>
+    <li>For a <b>Straight-Through cable</b>: LEDs on both units should light up in matching sequence — 1, 2, 3, 4, 5, 6, 7, 8 simultaneously.</li>
+    <li>For a <b>Cross-Over cable</b>: LEDs light in a crossed pattern — Main LED 1 matches Remote LED 3; Main LED 2 matches Remote LED 6, and vice versa.</li>
+    <li>If any LED does not light, there is a wiring fault. Re-terminate that end and re-test.</li>
+  </ol>
+
+  <h3>Result</h3>
+  <div class="result">
+    <p>RJ-45 Straight-Through and Cross-Over cables were successfully crimped following the T568B and T568A wiring standards respectively. The cable tester confirmed proper continuity and correct pin-to-pin mapping for both cables. The Straight-Through cable lit LEDs in sequence 1–8, and the Cross-Over cable showed the correct crossed pattern (1↔3, 2↔6).</p>
+  </div>
+
+  <div class="sigs">
+    <span>Student Signature: ___________________________</span>
+    <span>Teacher Signature: ___________________________</span>
+    <span>Marks: _______ / 10</span>
+  </div>
+
+  <button class="print-btn" onclick="window.print()">&#128438; Print This Practical</button>
+</div>
+</body>
+</html>
