@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Practical 03 – Basic Networking Commands</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Times New Roman', Times, serif; font-size: 11pt; background: #dce3ed; padding: 15px; }
+    .page { width: 210mm; margin: 0 auto; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.3); padding: 15mm 18mm; }
+    .header { border: 3px double #000; padding: 10px 14px; text-align: center; margin-bottom: 14px; }
+    .clg { font-size: 15pt; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+    .dept { font-size: 11.5pt; margin: 4px 0 2px; }
+    .subj { font-size: 10.5pt; }
+    hr.t { border: none; border-top: 2px solid #000; margin: 7px 0; }
+    .meta { display: flex; justify-content: space-between; font-size: 10pt; }
+    .prac-no { font-size: 13pt; font-weight: bold; text-align: center; text-decoration: underline; margin: 14px 0 10px; }
+    h3 { font-size: 11.5pt; font-weight: bold; text-decoration: underline; text-transform: uppercase; margin: 13px 0 5px; }
+    p { font-size: 10.5pt; line-height: 1.7; text-align: justify; margin-bottom: 4px; }
+    ul, ol { padding-left: 22px; margin: 4px 0; }
+    li { font-size: 10.5pt; line-height: 1.65; margin-bottom: 3px; text-align: justify; }
+    .result { border: 2px solid #000; padding: 10px; margin-top: 4px; background: #fafafa; }
+    .sigs { display: flex; justify-content: space-between; margin-top: 30px; font-size: 10.5pt; padding-top: 10px; border-top: 1px solid #000; }
+    table { width: 100%; border-collapse: collapse; margin: 7px 0; font-size: 10pt; }
+    th, td { border: 1px solid #000; padding: 5px 8px; }
+    th { background: #dde3ed; text-align: center; font-weight: bold; }
+    .cmd { font-family: Consolas, 'Courier New', monospace; background: #f0f0f0; border: 1px solid #bbb; padding: 1px 5px; font-size: 9.5pt; color: #1a1a6e; }
+    .print-btn { display: block; margin: 14px auto 0; padding: 7px 22px; background: #1a3c8f; color: #fff; border: none; border-radius: 4px; font-size: 10.5pt; cursor: pointer; }
+    .back-link { font-size: 10pt; margin-bottom: 10px; display: block; }
+    @media print {
+      body { background: #fff; padding: 0; }
+      .page { margin: 0; padding: 12mm 15mm; box-shadow: none; }
+      .print-btn, .back-link { display: none; }
+      @page { size: A4; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <a class="back-link" href="../index.html">&larr; Back to Index</a>
+
+  <div class="header">
+    <div class="clg">Your Engineering College Name</div>
+    <div class="dept">Department of Computer Science &amp; Engineering</div>
+    <div class="subj">Hardware &amp; Networking Lab &nbsp;|&nbsp; B.Tech CSE – 4th Semester</div>
+    <hr class="t">
+    <div class="meta">
+      <span>Name: <b>Pranay K Gajbhiye</b></span>
+      <span>Roll No: ___________</span>
+      <span>Batch: ___________</span>
+      <span>Date: ___________</span>
+    </div>
+  </div>
+
+  <div class="prac-no">Practical No. 03 – Study of Basic Networking Commands</div>
+
+  <h3>Aim</h3>
+  <p>To study and demonstrate important built-in networking commands in Windows OS and understand their purpose in network diagnostics and configuration.</p>
+
+  <h3>Theory</h3>
+  <p>Networking commands are built-in utilities that allow users and administrators to configure network settings, test connectivity, diagnose issues, and gather network information. Key Windows networking commands are:</p>
+
+  <p><b>1. ipconfig</b> – Displays the IP configuration for all network adapters. Essential for finding the IP address, subnet mask, default gateway, MAC address, and DNS servers.</p>
+  <table>
+    <tr><th>Command</th><th>Purpose</th></tr>
+    <tr><td class="cmd">ipconfig</td><td>Shows IP address, Subnet Mask, Default Gateway for each adapter</td></tr>
+    <tr><td class="cmd">ipconfig /all</td><td>Shows complete details including MAC address, DHCP status, DNS servers</td></tr>
+    <tr><td class="cmd">ipconfig /release</td><td>Releases the currently assigned DHCP IP address</td></tr>
+    <tr><td class="cmd">ipconfig /renew</td><td>Requests a new IP address from the DHCP server</td></tr>
+    <tr><td class="cmd">ipconfig /flushdns</td><td>Clears the DNS resolver cache</td></tr>
+  </table>
+
+  <p><b>2. ping</b> – Tests connectivity between two hosts by sending ICMP (Internet Control Message Protocol) Echo Request packets and waiting for Echo Reply. Reports round-trip time (RTT) and packet loss.</p>
+  <table>
+    <tr><th>Command</th><th>Purpose</th></tr>
+    <tr><td class="cmd">ping 127.0.0.1</td><td>Loopback test – verifies TCP/IP stack is working on the local machine</td></tr>
+    <tr><td class="cmd">ping 192.168.1.1</td><td>Pings the default gateway to test local network connectivity</td></tr>
+    <tr><td class="cmd">ping www.google.com</td><td>Tests internet connectivity and DNS resolution</td></tr>
+    <tr><td class="cmd">ping -t [IP]</td><td>Sends continuous ping packets until stopped (Ctrl+C)</td></tr>
+    <tr><td class="cmd">ping -n 10 [IP]</td><td>Sends exactly 10 ICMP packets</td></tr>
+  </table>
+
+  <p><b>3. tracert</b> (Trace Route) – Displays the path (hops) that packets take to reach a destination host. Shows the IP of each router along the route and time taken at each hop. Useful to identify where a network failure or slowdown occurs.</p>
+
+  <p><b>4. netstat</b> – Displays active TCP/IP connections, listening ports, and protocol statistics.</p>
+  <table>
+    <tr><th>Command</th><th>Purpose</th></tr>
+    <tr><td class="cmd">netstat</td><td>Lists currently active connections</td></tr>
+    <tr><td class="cmd">netstat -a</td><td>Shows all connections and listening ports</td></tr>
+    <tr><td class="cmd">netstat -n</td><td>Displays addresses and port numbers in numerical format</td></tr>
+    <tr><td class="cmd">netstat -r</td><td>Displays the IP routing table</td></tr>
+  </table>
+
+  <p><b>5. nslookup</b> – Queries DNS (Domain Name System) servers to resolve domain names to IP addresses, or reverse-lookup IPs to domain names. Useful for troubleshooting DNS issues.</p>
+
+  <p><b>6. arp</b> – Displays and modifies the ARP (Address Resolution Protocol) cache, which stores mappings of IP addresses to MAC (physical) addresses.</p>
+  <table>
+    <tr><th>Command</th><th>Purpose</th></tr>
+    <tr><td class="cmd">arp -a</td><td>Displays all current ARP cache entries (IP to MAC mappings)</td></tr>
+    <tr><td class="cmd">arp -d [IP]</td><td>Deletes a specific ARP cache entry</td></tr>
+  </table>
+
+  <p><b>7. hostname</b> – Displays the computer's NetBIOS or DNS hostname.</p>
+
+  <p><b>8. net view</b> – Lists computers and shared resources visible on the network.</p>
+
+  <h3>Apparatus / Requirements</h3>
+  <ul>
+    <li>Computer System with Windows OS (Windows 10 or later)</li>
+    <li>Command Prompt (cmd.exe) with Administrator privileges</li>
+    <li>Active LAN / Wi-Fi network connection</li>
+    <li>Internet connection (for testing ping to external hosts)</li>
+  </ul>
+
+  <h3>Procedure</h3>
+  <ol>
+    <li>Open Command Prompt: Press <b>Win + R</b>, type <span class="cmd">cmd</span>, and press Enter. (For admin: right-click cmd → "Run as administrator".)</li>
+
+    <li><b>ipconfig:</b>
+      <ul>
+        <li>Type <span class="cmd">ipconfig</span> and press Enter. Record the IPv4 Address, Subnet Mask, and Default Gateway.</li>
+        <li>Type <span class="cmd">ipconfig /all</span>. Note the Physical (MAC) Address and DNS Servers.</li>
+      </ul>
+    </li>
+
+    <li><b>ping:</b>
+      <ul>
+        <li>Type <span class="cmd">ping 127.0.0.1</span> – loopback test. Verify 0% packet loss.</li>
+        <li>Ping your default gateway: e.g., <span class="cmd">ping 192.168.1.1</span>.</li>
+        <li>Ping an external server: <span class="cmd">ping www.google.com</span>. Note TTL and time values.</li>
+      </ul>
+    </li>
+
+    <li><b>tracert:</b>
+      <ul>
+        <li>Type <span class="cmd">tracert www.google.com</span>. Observe each hop and its latency. Stop with Ctrl+C if needed.</li>
+      </ul>
+    </li>
+
+    <li><b>netstat:</b>
+      <ul>
+        <li>Type <span class="cmd">netstat -a</span> and note active TCP/UDP connections and listening ports.</li>
+      </ul>
+    </li>
+
+    <li><b>nslookup:</b>
+      <ul>
+        <li>Type <span class="cmd">nslookup www.google.com</span>. Record the IP address(es) returned by DNS.</li>
+      </ul>
+    </li>
+
+    <li><b>arp:</b>
+      <ul>
+        <li>Type <span class="cmd">arp -a</span>. Note the MAC addresses of nearby devices in the ARP cache.</li>
+      </ul>
+    </li>
+
+    <li>Type <span class="cmd">hostname</span> and note the computer name.</li>
+    <li>Document all command outputs with screenshots or written notes in the journal.</li>
+  </ol>
+
+  <h3>Result</h3>
+  <div class="result">
+    <p>Basic networking commands — <b>ipconfig, ping, tracert, netstat, nslookup, arp,</b> and <b>hostname</b> — were successfully executed and their outputs were analyzed. Network connectivity was verified at multiple levels: loopback (127.0.0.1), local gateway, and external internet (www.google.com). DNS resolution, ARP cache, and active port status were also examined.</p>
+  </div>
+
+  <div class="sigs">
+    <span>Student Signature: ___________________________</span>
+    <span>Teacher Signature: ___________________________</span>
+    <span>Marks: _______ / 10</span>
+  </div>
+
+  <button class="print-btn" onclick="window.print()">&#128438; Print This Practical</button>
+</div>
+</body>
+</html>
