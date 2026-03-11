@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Practical 07 – DHCP Configuration</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Times New Roman', Times, serif; font-size: 11pt; background: #dce3ed; padding: 15px; }
+    .page { width: 210mm; margin: 0 auto; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.3); padding: 15mm 18mm; }
+    .header { border: 3px double #000; padding: 10px 14px; text-align: center; margin-bottom: 14px; }
+    .clg { font-size: 15pt; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+    .dept { font-size: 11.5pt; margin: 4px 0 2px; }
+    .subj { font-size: 10.5pt; }
+    hr.t { border: none; border-top: 2px solid #000; margin: 7px 0; }
+    .meta { display: flex; justify-content: space-between; font-size: 10pt; }
+    .prac-no { font-size: 13pt; font-weight: bold; text-align: center; text-decoration: underline; margin: 14px 0 10px; }
+    h3 { font-size: 11.5pt; font-weight: bold; text-decoration: underline; text-transform: uppercase; margin: 13px 0 5px; }
+    p { font-size: 10.5pt; line-height: 1.7; text-align: justify; margin-bottom: 4px; }
+    ul, ol { padding-left: 22px; margin: 4px 0; }
+    li { font-size: 10.5pt; line-height: 1.65; margin-bottom: 3px; text-align: justify; }
+    .result { border: 2px solid #000; padding: 10px; margin-top: 4px; background: #fafafa; }
+    .sigs { display: flex; justify-content: space-between; margin-top: 30px; font-size: 10.5pt; padding-top: 10px; border-top: 1px solid #000; }
+    table { width: 100%; border-collapse: collapse; margin: 7px 0; font-size: 10pt; }
+    th, td { border: 1px solid #000; padding: 5px 8px; text-align: center; }
+    th { background: #dde3ed; font-weight: bold; }
+    td.left { text-align: left; }
+    .dora { display: flex; justify-content: space-between; margin: 8px 0; }
+    .dora-step { border: 2px solid #1a3c8f; text-align: center; padding: 8px 5px; width: 23%; background: #e8eef8; font-size: 10pt; }
+    .dora-step .letter { font-size: 18pt; font-weight: bold; color: #1a3c8f; display: block; }
+    .cmd { font-family: Consolas, 'Courier New', monospace; background: #f0f0f0; border: 1px solid #bbb; padding: 1px 5px; font-size: 9.5pt; color: #1a1a6e; }
+    .print-btn { display: block; margin: 14px auto 0; padding: 7px 22px; background: #1a3c8f; color: #fff; border: none; border-radius: 4px; font-size: 10.5pt; cursor: pointer; }
+    .back-link { font-size: 10pt; margin-bottom: 10px; display: block; }
+    @media print {
+      body { background: #fff; padding: 0; }
+      .page { margin: 0; padding: 12mm 15mm; box-shadow: none; }
+      .print-btn, .back-link { display: none; }
+      @page { size: A4; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <a class="back-link" href="../index.html">&larr; Back to Index</a>
+
+  <div class="header">
+    <div class="clg">Your Engineering College Name</div>
+    <div class="dept">Department of Computer Science &amp; Engineering</div>
+    <div class="subj">Hardware &amp; Networking Lab &nbsp;|&nbsp; B.Tech CSE – 4th Semester</div>
+    <hr class="t">
+    <div class="meta">
+      <span>Name: <b>Pranay K Gajbhiye</b></span>
+      <span>Roll No: ___________</span>
+      <span>Batch: ___________</span>
+      <span>Date: ___________</span>
+    </div>
+  </div>
+
+  <div class="prac-no">Practical No. 07 – DHCP Server Configuration</div>
+
+  <h3>Aim</h3>
+  <p>To configure a DHCP (Dynamic Host Configuration Protocol) server, assign a DHCP scope/pool, and verify that client computers receive IP addresses automatically using the DORA process.</p>
+
+  <h3>Theory</h3>
+  <p><b>DHCP (Dynamic Host Configuration Protocol):</b> An application-layer network protocol (standardised in RFC 2131) that automatically assigns IP addresses and network configuration parameters to devices on a network. It operates on UDP, using port 67 (server) and port 68 (client).</p>
+
+  <p><b>Information provided by DHCP to a client:</b></p>
+  <ul>
+    <li>IP Address (from the configured pool)</li>
+    <li>Subnet Mask</li>
+    <li>Default Gateway</li>
+    <li>DNS Server address(es)</li>
+    <li>IP Address Lease Time</li>
+  </ul>
+
+  <p><b>The DORA Process</b> (how a client obtains an IP from a DHCP server):</p>
+  <div class="dora">
+    <div class="dora-step"><span class="letter">D</span><b>DISCOVER</b><br><small>Client broadcasts a request looking for any DHCP server on the network</small></div>
+    <div class="dora-step"><span class="letter">O</span><b>OFFER</b><br><small>Server responds with an available IP address offer and configuration info</small></div>
+    <div class="dora-step"><span class="letter">R</span><b>REQUEST</b><br><small>Client broadcasts acceptance of the offered IP and requests it formally</small></div>
+    <div class="dora-step"><span class="letter">A</span><b>ACK</b><br><small>Server confirms the assignment by sending a DHCPACK to the client</small></div>
+  </div>
+
+  <p><b>Key DHCP Terminology:</b></p>
+  <table>
+    <tr><th>Term</th><th class="left">Definition</th></tr>
+    <tr><td>Scope / Pool</td><td class="left">The range of IP addresses the server can assign</td></tr>
+    <tr><td>Lease</td><td class="left">The duration for which an IP address is assigned to a client</td></tr>
+    <tr><td>Reservation</td><td class="left">Binding a specific IP always to a specific MAC address</td></tr>
+    <tr><td>Exclusion Range</td><td class="left">IPs within the scope excluded from dynamic assignment (for static devices)</td></tr>
+  </table>
+
+  <p><b>Advantages of DHCP:</b></p>
+  <ul>
+    <li>Eliminates manual IP configuration — reduces human error.</li>
+    <li>Prevents IP address conflicts on the network.</li>
+    <li>Centrally managed — easy to update gateway/DNS for all clients at once.</li>
+    <li>Efficient reuse of IP addresses through leasing.</li>
+  </ul>
+
+  <h3>Apparatus / Requirements</h3>
+  <ul>
+    <li>Cisco Packet Tracer software (for simulation) <b>OR</b> a Windows Server with DHCP server role</li>
+    <li>1 Server device configured as DHCP server</li>
+    <li>3–4 PCs as DHCP clients</li>
+    <li>1 Switch to connect all devices</li>
+    <li>Straight-through UTP cables</li>
+  </ul>
+
+  <h3>Procedure (Using Cisco Packet Tracer)</h3>
+  <ol>
+    <li><b>Build the Network Topology:</b>
+      <ul>
+        <li>Open Cisco Packet Tracer. Create a new workspace.</li>
+        <li>Add 1 <b>Server-PT</b> device (will be the DHCP server).</li>
+        <li>Add 1 <b>Switch</b> (2960 or similar).</li>
+        <li>Add 4 <b>PC</b> devices (will be DHCP clients).</li>
+        <li>Connect the Server and all PCs to the Switch using straight-through cables.</li>
+      </ul>
+    </li>
+
+    <li><b>Assign a Static IP to the DHCP Server:</b>
+      <ul>
+        <li>Click on the Server → <b>Desktop</b> tab → <b>IP Configuration</b>.</li>
+        <li>Select <b>Static</b>. Enter: IP = <b>192.168.1.1</b>, Subnet = <b>255.255.255.0</b>, Gateway = <b>192.168.1.1</b>.</li>
+      </ul>
+    </li>
+
+    <li><b>Configure the DHCP Service on the Server:</b>
+      <ul>
+        <li>Click on the Server → <b>Services</b> tab → click <b>DHCP</b> in the left panel.</li>
+        <li>Ensure the DHCP service is turned <b>ON</b>.</li>
+        <li>Configure the pool settings:
+          <ul>
+            <li>Pool Name: <b>LAN_POOL</b></li>
+            <li>Default Gateway: <b>192.168.1.1</b></li>
+            <li>DNS Server: <b>8.8.8.8</b></li>
+            <li>Start IP Address: <b>192.168.1.10</b></li>
+            <li>Subnet Mask: <b>255.255.255.0</b></li>
+            <li>Maximum Users: <b>50</b></li>
+          </ul>
+        </li>
+        <li>Click <b>Add</b> to save the pool, then click <b>Save</b>.</li>
+      </ul>
+    </li>
+
+    <li><b>Configure Clients to Use DHCP:</b>
+      <ul>
+        <li>Click on <b>PC1</b> → <b>Desktop</b> → <b>IP Configuration</b>.</li>
+        <li>Select <b>DHCP</b> radio button. Wait a moment.</li>
+        <li>The PC should automatically receive an IP address (e.g., 192.168.1.10) from the pool.</li>
+        <li>Note down the assigned IP, subnet mask, and default gateway.</li>
+        <li>Repeat for PC2, PC3, and PC4. Each should receive a different IP.</li>
+      </ul>
+    </li>
+
+    <li><b>Verify Connectivity:</b>
+      <ul>
+        <li>On each PC: <b>Desktop → Command Prompt</b> → type <span class="cmd">ipconfig</span> to verify assigned IP.</li>
+        <li>Ping another PC to verify communication: <span class="cmd">ping 192.168.1.11</span></li>
+        <li>All pings should succeed with 0% packet loss.</li>
+      </ul>
+    </li>
+
+    <li>Document the DHCP pool settings, assigned IPs for each PC, and successful ping results.</li>
+  </ol>
+
+  <h3>Result</h3>
+  <div class="result">
+    <p>A DHCP server was successfully configured in Cisco Packet Tracer with a scope of 192.168.1.10 – 192.168.1.59. All four client PCs received unique IP addresses, subnet masks (255.255.255.0), default gateway (192.168.1.1), and DNS server (8.8.8.8) automatically through the DHCP DORA process. Connectivity between all clients was verified successfully using the ping command.</p>
+  </div>
+
+  <div class="sigs">
+    <span>Student Signature: ___________________________</span>
+    <span>Teacher Signature: ___________________________</span>
+    <span>Marks: _______ / 10</span>
+  </div>
+
+  <button class="print-btn" onclick="window.print()">&#128438; Print This Practical</button>
+</div>
+</body>
+</html>
