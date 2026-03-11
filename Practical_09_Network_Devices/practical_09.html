@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Practical 09 – Study of Network Devices</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Times New Roman', Times, serif; font-size: 11pt; background: #dce3ed; padding: 15px; }
+    .page { width: 210mm; margin: 0 auto; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.3); padding: 15mm 18mm; }
+    .header { border: 3px double #000; padding: 10px 14px; text-align: center; margin-bottom: 14px; }
+    .clg { font-size: 15pt; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+    .dept { font-size: 11.5pt; margin: 4px 0 2px; }
+    .subj { font-size: 10.5pt; }
+    hr.t { border: none; border-top: 2px solid #000; margin: 7px 0; }
+    .meta { display: flex; justify-content: space-between; font-size: 10pt; }
+    .prac-no { font-size: 13pt; font-weight: bold; text-align: center; text-decoration: underline; margin: 14px 0 10px; }
+    h3 { font-size: 11.5pt; font-weight: bold; text-decoration: underline; text-transform: uppercase; margin: 13px 0 5px; }
+    p { font-size: 10.5pt; line-height: 1.7; text-align: justify; margin-bottom: 4px; }
+    ul, ol { padding-left: 22px; margin: 4px 0; }
+    li { font-size: 10.5pt; line-height: 1.65; margin-bottom: 3px; text-align: justify; }
+    .result { border: 2px solid #000; padding: 10px; margin-top: 4px; background: #fafafa; }
+    .sigs { display: flex; justify-content: space-between; margin-top: 30px; font-size: 10.5pt; padding-top: 10px; border-top: 1px solid #000; }
+    table { width: 100%; border-collapse: collapse; margin: 7px 0; font-size: 10pt; }
+    th, td { border: 1px solid #000; padding: 5px 8px; }
+    th { background: #dde3ed; text-align: center; font-weight: bold; }
+    td { text-align: center; }
+    td.left { text-align: left; }
+    .device-box { border: 2px solid #1a3c8f; padding: 8px 12px; margin: 7px 0; background: #f0f4fb; }
+    .device-box .dname { font-weight: bold; font-size: 11pt; color: #1a3c8f; margin-bottom: 3px; }
+    .print-btn { display: block; margin: 14px auto 0; padding: 7px 22px; background: #1a3c8f; color: #fff; border: none; border-radius: 4px; font-size: 10.5pt; cursor: pointer; }
+    .back-link { font-size: 10pt; margin-bottom: 10px; display: block; }
+    @media print {
+      body { background: #fff; padding: 0; }
+      .page { margin: 0; padding: 12mm 15mm; box-shadow: none; }
+      .print-btn, .back-link { display: none; }
+      @page { size: A4; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <a class="back-link" href="../index.html">&larr; Back to Index</a>
+
+  <div class="header">
+    <div class="clg">Your Engineering College Name</div>
+    <div class="dept">Department of Computer Science &amp; Engineering</div>
+    <div class="subj">Hardware &amp; Networking Lab &nbsp;|&nbsp; B.Tech CSE – 4th Semester</div>
+    <hr class="t">
+    <div class="meta">
+      <span>Name: <b>Pranay K Gajbhiye</b></span>
+      <span>Roll No: ___________</span>
+      <span>Batch: ___________</span>
+      <span>Date: ___________</span>
+    </div>
+  </div>
+
+  <div class="prac-no">Practical No. 09 – Study of Network Devices</div>
+
+  <h3>Aim</h3>
+  <p>To study and understand various hardware devices used in computer networks — namely Repeater, Hub, Bridge, Switch, Router, Gateway, and NIC — including their characteristics, OSI layer, and use cases.</p>
+
+  <h3>Theory</h3>
+  <p>Network devices are hardware components that connect computers and other devices together to share resources and communicate. Each device operates at a specific layer of the OSI model.</p>
+
+  <div class="device-box">
+    <div class="dname">1. NIC – Network Interface Card</div>
+    <p><b>OSI Layer:</b> Physical &amp; Data Link (Layer 1 &amp; 2). A hardware card installed in a computer that provides the physical connection to a network. Each NIC has a unique 48-bit MAC (Media Access Control) address burned in by the manufacturer. Available in wired (Ethernet) and wireless (Wi-Fi) forms. Most modern computers have the NIC integrated on the motherboard.</p>
+  </div>
+
+  <div class="device-box">
+    <div class="dname">2. Repeater</div>
+    <p><b>OSI Layer:</b> Physical (Layer 1). Receives a signal, amplifies/regenerates it, and retransmits it to extend the network over a greater distance. It has no intelligence — it repeats all signals including noise. Does <i>not</i> filter traffic. Commonly used to extend Ethernet segments beyond their maximum cable length (e.g., 100 m for CAT5e).</p>
+  </div>
+
+  <div class="device-box">
+    <div class="dname">3. Hub</div>
+    <p><b>OSI Layer:</b> Physical (Layer 1). A multi-port repeater. When a frame arrives on one port, it broadcasts it to all other ports regardless of destination. This creates a shared collision domain — only one device can transmit at a time. Available in active (powered) and passive (no power) types. Largely obsolete — replaced by switches. Operate in <b>half-duplex</b> mode only.</p>
+  </div>
+
+  <div class="device-box">
+    <div class="dname">4. Bridge</div>
+    <p><b>OSI Layer:</b> Data Link (Layer 2). Connects two LAN segments and uses a MAC address table to forward frames only to the correct segment, reducing unnecessary traffic. It divides a network into collision domains. Smarter than a hub but simpler than a switch. Most commonly two-port devices. Bridges are the predecessors of modern switches.</p>
+  </div>
+
+  <div class="device-box">
+    <div class="dname">5. Switch (Layer 2 Switch)</div>
+    <p><b>OSI Layer:</b> Data Link (Layer 2). A multi-port bridge. Maintains a MAC address table (CAM table) and forwards frames only to the specific destination port, creating separate collision domains for each port. This dramatically improves performance over hubs. Supports <b>full-duplex</b> communication. Most modern LANs are entirely switch-based. Layer 3 switches can also perform routing.</p>
+  </div>
+
+  <div class="device-box">
+    <div class="dname">6. Router</div>
+    <p><b>OSI Layer:</b> Network (Layer 3). Connects multiple networks (e.g., LAN to WAN/Internet). Uses a routing table and IP addresses to determine the best path to forward packets. Each interface on a router is in a different network/subnet. Home routers also typically include a DHCP server, NAT (Network Address Translation) for sharing one public IP among many private IP devices, and a built-in switch.</p>
+  </div>
+
+  <div class="device-box">
+    <div class="dname">7. Gateway</div>
+    <p><b>OSI Layer:</b> All layers (Layer 1–7). Connects networks using entirely different protocols (e.g., a LAN to a mainframe network). Performs full protocol translation/conversion. It is the most complex and most capable of all networking devices. In common usage, the term "default gateway" refers to the router's IP address that acts as the exit point from a local network.</p>
+  </div>
+
+  <div class="device-box">
+    <div class="dname">8. Modem (Modulator-Demodulator)</div>
+    <p><b>OSI Layer:</b> Physical (Layer 1). Converts digital data from a computer into an analogue signal for transmission over telephone/cable lines (modulation), and converts incoming analogue signals back to digital (demodulation). Used to connect to the Internet via ISP infrastructure (DSL, cable, fibre).</p>
+  </div>
+
+  <p><b>Comparison Table:</b></p>
+  <table>
+    <tr>
+      <th>Device</th>
+      <th>OSI Layer</th>
+      <th>Address Used</th>
+      <th>Collision Domain</th>
+      <th>Broadcast Domain</th>
+    </tr>
+    <tr><td>Hub</td><td>L1 – Physical</td><td>None</td><td>1 (shared)</td><td>1 (shared)</td></tr>
+    <tr><td>Repeater</td><td>L1 – Physical</td><td>None</td><td>Extends 1</td><td>1</td></tr>
+    <tr><td>Bridge</td><td>L2 – Data Link</td><td>MAC Address</td><td>Separate per port</td><td>1 (shared)</td></tr>
+    <tr><td>Switch</td><td>L2 – Data Link</td><td>MAC Address</td><td>Separate per port</td><td>1 per VLAN</td></tr>
+    <tr><td>Router</td><td>L3 – Network</td><td>IP Address</td><td>Separate per port</td><td>Separate per interface</td></tr>
+    <tr><td>Gateway</td><td>L1–L7 (All)</td><td>All</td><td>Separate</td><td>Separate</td></tr>
+  </table>
+
+  <h3>Apparatus / Requirements</h3>
+  <ul>
+    <li>Physical networking devices for observation: NIC, Hub (or visual model), Switch (Layer 2), Router, Patch cables</li>
+    <li>Computer System with Cisco Packet Tracer installed</li>
+    <li>Reference diagrams / datasheet of each device</li>
+  </ul>
+
+  <h3>Procedure</h3>
+  <ol>
+    <li>Physically observe each networking device available in the lab: NIC, Hub, Switch, Router, Repeater.</li>
+    <li>Identify and note: number of ports, LED indicators, type of ports (RJ-45, fibre, console), brand and model number.</li>
+    <li>Open Cisco Packet Tracer. Place the following devices on the workspace: Hub (generic), Switch (2960), Router (1841 or 2811), Server, 3 PCs.</li>
+    <li><b>Hub experiment:</b> Connect 3 PCs to a hub. From PC1, ping PC2. Observe in Packet Tracer's simulation mode that the frame is broadcast to all ports (including PC3).</li>
+    <li><b>Switch experiment:</b> Connect the same 3 PCs to a switch. Ping PC2 from PC1. In simulation mode, observe that the frame goes only to PC2 after the MAC table is populated.</li>
+    <li><b>Router experiment:</b> Create two different sub-networks (e.g., 192.168.1.0/24 and 192.168.2.0/24). Connect each to a router interface. Assign static IPs to PCs. Configure router interfaces with correct IP addresses. Ping across subnets to confirm routing.</li>
+    <li>Note down MAC addresses, IP addresses, and routing table entries as observed in Packet Tracer.</li>
+    <li>Draw a diagram showing the OSI layer position of each device.</li>
+  </ol>
+
+  <h3>Result</h3>
+  <div class="result">
+    <p>Various networking devices — NIC, Repeater, Hub, Bridge, Switch, Router, Gateway, and Modem — were studied in detail. Their working principles, OSI layers, and use cases were understood. Practical simulation in Cisco Packet Tracer confirmed that a hub broadcasts to all ports while a switch forwards only to the destination port. Inter-network communication between two different subnets using a router was also verified successfully.</p>
+  </div>
+
+  <div class="sigs">
+    <span>Student Signature: ___________________________</span>
+    <span>Teacher Signature: ___________________________</span>
+    <span>Marks: _______ / 10</span>
+  </div>
+
+  <button class="print-btn" onclick="window.print()">&#128438; Print This Practical</button>
+</div>
+</body>
+</html>
