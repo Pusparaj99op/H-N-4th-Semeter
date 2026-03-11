@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Practical 10 – TCP/IP Protocol Suite</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Times New Roman', Times, serif; font-size: 11pt; background: #dce3ed; padding: 15px; }
+    .page { width: 210mm; margin: 0 auto; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.3); padding: 15mm 18mm; }
+    .header { border: 3px double #000; padding: 10px 14px; text-align: center; margin-bottom: 14px; }
+    .clg { font-size: 15pt; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+    .dept { font-size: 11.5pt; margin: 4px 0 2px; }
+    .subj { font-size: 10.5pt; }
+    hr.t { border: none; border-top: 2px solid #000; margin: 7px 0; }
+    .meta { display: flex; justify-content: space-between; font-size: 10pt; }
+    .prac-no { font-size: 13pt; font-weight: bold; text-align: center; text-decoration: underline; margin: 14px 0 10px; }
+    h3 { font-size: 11.5pt; font-weight: bold; text-decoration: underline; text-transform: uppercase; margin: 13px 0 5px; }
+    p { font-size: 10.5pt; line-height: 1.7; text-align: justify; margin-bottom: 4px; }
+    ul, ol { padding-left: 22px; margin: 4px 0; }
+    li { font-size: 10.5pt; line-height: 1.65; margin-bottom: 3px; text-align: justify; }
+    .result { border: 2px solid #000; padding: 10px; margin-top: 4px; background: #fafafa; }
+    .sigs { display: flex; justify-content: space-between; margin-top: 30px; font-size: 10.5pt; padding-top: 10px; border-top: 1px solid #000; }
+    table { width: 100%; border-collapse: collapse; margin: 7px 0; font-size: 10pt; }
+    th, td { border: 1px solid #000; padding: 5px 8px; }
+    th { background: #dde3ed; text-align: center; font-weight: bold; }
+    td { text-align: center; }
+    td.left { text-align: left; }
+    .cmd { font-family: Consolas, 'Courier New', monospace; background: #f0f0f0; border: 1px solid #bbb; padding: 1px 5px; font-size: 9.5pt; color: #1a1a6e; }
+    .tcp-ip-model { display: flex; gap: 0; margin: 8px 0; border: 1px solid #000; }
+    .tcpip-col { flex: 1; }
+    .tcpip-col .col-head { background: #1a3c8f; color: #fff; font-weight: bold; font-size: 10pt; padding: 5px; text-align: center; }
+    .tcpip-col .layer-cell { border: 1px solid #aaa; padding: 5px; text-align: center; font-size: 9.5pt; }
+    .la { background: #ffd6d6; }
+    .lt { background: #d6ffd9; }
+    .ln { background: #d6f0ff; }
+    .lna { background: #ffd6f5; }
+    .print-btn { display: block; margin: 14px auto 0; padding: 7px 22px; background: #1a3c8f; color: #fff; border: none; border-radius: 4px; font-size: 10.5pt; cursor: pointer; }
+    .back-link { font-size: 10pt; margin-bottom: 10px; display: block; }
+    @media print {
+      body { background: #fff; padding: 0; }
+      .page { margin: 0; padding: 12mm 15mm; box-shadow: none; }
+      .print-btn, .back-link { display: none; }
+      @page { size: A4; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <a class="back-link" href="../index.html">&larr; Back to Index</a>
+
+  <div class="header">
+    <div class="clg">Your Engineering College Name</div>
+    <div class="dept">Department of Computer Science &amp; Engineering</div>
+    <div class="subj">Hardware &amp; Networking Lab &nbsp;|&nbsp; B.Tech CSE – 4th Semester</div>
+    <hr class="t">
+    <div class="meta">
+      <span>Name: <b>Pranay K Gajbhiye</b></span>
+      <span>Roll No: ___________</span>
+      <span>Batch: ___________</span>
+      <span>Date: ___________</span>
+    </div>
+  </div>
+
+  <div class="prac-no">Practical No. 10 – Study of TCP/IP Protocol Suite</div>
+
+  <h3>Aim</h3>
+  <p>To study the TCP/IP protocol suite, understand the four-layer TCP/IP model, compare it with the OSI model, analyse TCP and UDP characteristics, and observe the TCP 3-way handshake using Wireshark.</p>
+
+  <h3>Theory</h3>
+  <p><b>TCP/IP Protocol Suite:</b> The foundational set of communication protocols used for the Internet and most computer networks. It was developed by DARPA in the 1970s and consists of two core protocols: <b>TCP</b> (Transmission Control Protocol) and <b>IP</b> (Internet Protocol), along with many supporting protocols.</p>
+
+  <p><b>TCP/IP Model (4 Layers) vs OSI Model (7 Layers):</b></p>
+  <table>
+    <tr>
+      <th>TCP/IP Layer</th>
+      <th>Equivalent OSI Layers</th>
+      <th>Key Protocols</th>
+    </tr>
+    <tr class="la">
+      <td><b>4. Application</b></td>
+      <td>Application + Presentation + Session (OSI 5, 6, 7)</td>
+      <td class="left">HTTP, HTTPS, FTP, SMTP, DNS, DHCP, SSH, Telnet, SNMP, POP3</td>
+    </tr>
+    <tr class="lt">
+      <td><b>3. Transport</b></td>
+      <td>Transport (OSI 4)</td>
+      <td class="left">TCP (reliable), UDP (unreliable), SCTP</td>
+    </tr>
+    <tr class="ln">
+      <td><b>2. Internet</b></td>
+      <td>Network (OSI 3)</td>
+      <td class="left">IPv4, IPv6, ICMP, ARP, RARP, OSPF, BGP, RIP</td>
+    </tr>
+    <tr class="lna">
+      <td><b>1. Network Access</b></td>
+      <td>Data Link + Physical (OSI 1, 2)</td>
+      <td class="left">Ethernet, Wi-Fi (802.11), PPP, Token Ring, Frame Relay</td>
+    </tr>
+  </table>
+
+  <p><b>IP – Internet Protocol:</b> Responsible for logical addressing (IP addresses) and routing of packets from source to destination across multiple networks. IP is <i>connectionless</i> and <i>unreliable</i> — it makes no guarantee of delivery, ordering, or error correction. IPv4 uses 32-bit addresses; IPv6 uses 128-bit addresses.</p>
+
+  <p><b>TCP – Transmission Control Protocol:</b></p>
+  <ul>
+    <li>Connection-oriented: A connection must be established before data is sent.</li>
+    <li>Reliable: Guarantees delivery using acknowledgements, retransmission, and sequencing.</li>
+    <li>Flow control: Uses a sliding window mechanism to match send rate with receiver capacity.</li>
+    <li>Congestion control: Adjusts transmission rate to avoid network congestion.</li>
+    <li>Used by: HTTP, HTTPS, FTP, SMTP, SSH.</li>
+  </ul>
+
+  <p><b>UDP – User Datagram Protocol:</b></p>
+  <ul>
+    <li>Connectionless: No handshake; data is sent without establishing a connection.</li>
+    <li>Unreliable: No guarantee of delivery, ordering, or duplicate protection.</li>
+    <li>Faster and lower overhead than TCP.</li>
+    <li>Used by: DNS, DHCP, video streaming, VoIP, online gaming.</li>
+  </ul>
+
+  <table>
+    <tr>
+      <th>Feature</th>
+      <th>TCP</th>
+      <th>UDP</th>
+    </tr>
+    <tr><td>Connection</td><td>Connection-oriented</td><td>Connectionless</td></tr>
+    <tr><td>Reliability</td><td>Reliable (ACK, retransmit)</td><td>Unreliable</td></tr>
+    <tr><td>Speed</td><td>Slower (overhead)</td><td>Faster</td></tr>
+    <tr><td>Order</td><td>In-order delivery</td><td>No ordering</td></tr>
+    <tr><td>Error Check</td><td>Yes (checksum + ACK)</td><td>Checksum only</td></tr>
+    <tr><td>Header Size</td><td>20–60 bytes</td><td>8 bytes</td></tr>
+    <tr><td>Use Case</td><td>HTTP, email, file transfer</td><td>DNS, VoIP, streaming</td></tr>
+  </table>
+
+  <p><b>TCP 3-Way Handshake</b> – How TCP establishes a connection:</p>
+  <ol>
+    <li><b>SYN:</b> Client sends a TCP segment with SYN (synchronise) flag set, along with a random Initial Sequence Number (ISN).</li>
+    <li><b>SYN-ACK:</b> Server receives the SYN, replies with SYN+ACK. Acknowledges client's ISN and sends its own ISN.</li>
+    <li><b>ACK:</b> Client sends a final ACK to acknowledge the server's ISN. Connection is now established.</li>
+  </ol>
+  <p>Connection is terminated using a 4-way handshake: FIN → ACK → FIN → ACK.</p>
+
+  <p><b>Well-Known Port Numbers:</b></p>
+  <table>
+    <tr><th>Port</th><th>Protocol</th><th>Service</th></tr>
+    <tr><td>20, 21</td><td>TCP</td><td class="left">FTP (Data / Control)</td></tr>
+    <tr><td>22</td><td>TCP</td><td class="left">SSH (Secure Shell)</td></tr>
+    <tr><td>23</td><td>TCP</td><td class="left">Telnet</td></tr>
+    <tr><td>25</td><td>TCP</td><td class="left">SMTP (Email sending)</td></tr>
+    <tr><td>53</td><td>TCP/UDP</td><td class="left">DNS (Domain Name System)</td></tr>
+    <tr><td>67/68</td><td>UDP</td><td class="left">DHCP (Server/Client)</td></tr>
+    <tr><td>80</td><td>TCP</td><td class="left">HTTP (Web)</td></tr>
+    <tr><td>110</td><td>TCP</td><td class="left">POP3 (Email retrieval)</td></tr>
+    <tr><td>143</td><td>TCP</td><td class="left">IMAP (Email retrieval)</td></tr>
+    <tr><td>443</td><td>TCP</td><td class="left">HTTPS (Secure Web)</td></tr>
+  </table>
+
+  <h3>Apparatus / Requirements</h3>
+  <ul>
+    <li>Computer System with Windows OS</li>
+    <li>Wireshark (packet analyser – free download)</li>
+    <li>Command Prompt</li>
+    <li>Active internet/LAN connection</li>
+  </ul>
+
+  <h3>Procedure</h3>
+  <ol>
+    <li>Open Wireshark. Start packet capture on the active Ethernet/Wi-Fi interface.</li>
+    <li>Open a browser and visit any HTTP website (e.g., <span class="cmd">http://example.com</span>). Return to Wireshark and stop capture.</li>
+    <li>In the filter box, type <span class="cmd">tcp</span> and press Enter to show only TCP packets.</li>
+    <li><b>Observe the TCP 3-Way Handshake:</b>
+      <ul>
+        <li>Find the first packet from your machine — it should be a <b>[SYN]</b> packet.</li>
+        <li>The next packet from the server should be <b>[SYN, ACK]</b>.</li>
+        <li>The third packet from your machine should be <b>[ACK]</b>. This completes the handshake.</li>
+      </ul>
+    </li>
+    <li>Click on the SYN packet. Expand the <b>Transmission Control Protocol</b> section in the packet details pane. Record:
+      <ul>
+        <li>Source Port and Destination Port</li>
+        <li>Sequence Number and Acknowledgement Number</li>
+        <li>Flags set (SYN, ACK)</li>
+        <li>Window Size</li>
+      </ul>
+    </li>
+    <li>In the filter box, type <span class="cmd">udp</span> to view UDP traffic. Click a DNS packet (port 53) and note the smaller header size and lack of sequence/acknowledgement numbers compared to TCP.</li>
+    <li>In Command Prompt, run <span class="cmd">netstat -n</span> to observe active TCP connections with their port numbers and states (ESTABLISHED, TIME_WAIT).</li>
+    <li>Document all findings with packet details and screenshots.</li>
+  </ol>
+
+  <h3>Result</h3>
+  <div class="result">
+    <p>The TCP/IP protocol suite was studied in detail. The 4-layer TCP/IP model and its mapping to the OSI model were understood. Key characteristics of TCP (reliable, connection-oriented, 3-way handshake) and UDP (unreliable, connectionless, faster) were compared. Using Wireshark, the TCP 3-way handshake (SYN → SYN-ACK → ACK) was observed in a live capture, and well-known port numbers for HTTP, DNS, FTP, and DHCP were identified.</p>
+  </div>
+
+  <div class="sigs">
+    <span>Student Signature: ___________________________</span>
+    <span>Teacher Signature: ___________________________</span>
+    <span>Marks: _______ / 10</span>
+  </div>
+
+  <button class="print-btn" onclick="window.print()">&#128438; Print This Practical</button>
+</div>
+</body>
+</html>
