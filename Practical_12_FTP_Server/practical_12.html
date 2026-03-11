@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Practical 12 – FTP Server Configuration</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Times New Roman', Times, serif; font-size: 11pt; background: #dce3ed; padding: 15px; }
+    .page { width: 210mm; margin: 0 auto; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.3); padding: 15mm 18mm; }
+    .header { border: 3px double #000; padding: 10px 14px; text-align: center; margin-bottom: 14px; }
+    .clg { font-size: 15pt; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+    .dept { font-size: 11.5pt; margin: 4px 0 2px; }
+    .subj { font-size: 10.5pt; }
+    hr.t { border: none; border-top: 2px solid #000; margin: 7px 0; }
+    .meta { display: flex; justify-content: space-between; font-size: 10pt; }
+    .prac-no { font-size: 13pt; font-weight: bold; text-align: center; text-decoration: underline; margin: 14px 0 10px; }
+    h3 { font-size: 11.5pt; font-weight: bold; text-decoration: underline; text-transform: uppercase; margin: 13px 0 5px; }
+    p { font-size: 10.5pt; line-height: 1.7; text-align: justify; margin-bottom: 4px; }
+    ul, ol { padding-left: 22px; margin: 4px 0; }
+    li { font-size: 10.5pt; line-height: 1.65; margin-bottom: 3px; text-align: justify; }
+    .result { border: 2px solid #000; padding: 10px; margin-top: 4px; background: #fafafa; }
+    .sigs { display: flex; justify-content: space-between; margin-top: 30px; font-size: 10.5pt; padding-top: 10px; border-top: 1px solid #000; }
+    table { width: 100%; border-collapse: collapse; margin: 7px 0; font-size: 10pt; }
+    th, td { border: 1px solid #000; padding: 5px 8px; }
+    th { background: #dde3ed; text-align: center; font-weight: bold; }
+    td { text-align: center; }
+    td.left { text-align: left; }
+    .cmd { font-family: Consolas, 'Courier New', monospace; background: #f0f0f0; border: 1px solid #bbb; padding: 1px 5px; font-size: 9.5pt; color: #1a1a6e; }
+    .modes { display: flex; gap: 10px; margin: 8px 0; }
+    .mode-box { flex: 1; border: 2px solid #1a3c8f; padding: 8px; background: #f0f4fb; text-align: center; font-size: 10pt; }
+    .mode-box b { display: block; font-size: 11pt; color: #1a3c8f; margin-bottom: 4px; }
+    .print-btn { display: block; margin: 14px auto 0; padding: 7px 22px; background: #1a3c8f; color: #fff; border: none; border-radius: 4px; font-size: 10.5pt; cursor: pointer; }
+    .back-link { font-size: 10pt; margin-bottom: 10px; display: block; }
+    @media print {
+      body { background: #fff; padding: 0; }
+      .page { margin: 0; padding: 12mm 15mm; box-shadow: none; }
+      .print-btn, .back-link { display: none; }
+      @page { size: A4; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <a class="back-link" href="../index.html">&larr; Back to Index</a>
+
+  <div class="header">
+    <div class="clg">Your Engineering College Name</div>
+    <div class="dept">Department of Computer Science &amp; Engineering</div>
+    <div class="subj">Hardware &amp; Networking Lab &nbsp;|&nbsp; B.Tech CSE – 4th Semester</div>
+    <hr class="t">
+    <div class="meta">
+      <span>Name: <b>Pranay K Gajbhiye</b></span>
+      <span>Roll No: ___________</span>
+      <span>Batch: ___________</span>
+      <span>Date: ___________</span>
+    </div>
+  </div>
+
+  <div class="prac-no">Practical No. 12 – FTP Server Configuration</div>
+
+  <h3>Aim</h3>
+  <p>To configure an FTP (File Transfer Protocol) server using Cisco Packet Tracer, create FTP user accounts with permissions, and demonstrate file upload (<span class="cmd">put</span>) and download (<span class="cmd">get</span>) operations from an FTP client.</p>
+
+  <h3>Theory</h3>
+  <p><b>FTP – File Transfer Protocol:</b> An Application Layer (Layer 7) protocol used to transfer files between a client and server over a TCP/IP network. Defined in <b>RFC 959</b>. FTP uses <b>two separate TCP connections</b>:</p>
+  <ul>
+    <li><b>Port 21 – Control Connection:</b> Used to send commands and responses (authentication, navigation, file listing, etc.). Remains open for the entire session.</li>
+    <li><b>Port 20 – Data Connection:</b> Used to transfer the actual file data. Opened and closed for each individual transfer.</li>
+  </ul>
+
+  <p><b>FTP Modes of Data Transfer:</b></p>
+  <div class="modes">
+    <div class="mode-box">
+      <b>Active Mode</b>
+      Server connects back to the client on a client-specified port (PORT command) to open the data channel. May be blocked by client-side firewalls.
+    </div>
+    <div class="mode-box">
+      <b>Passive Mode (PASV)</b>
+      Server opens a random port for data; client connects to it. Preferred mode today — more firewall-friendly as only client initiates connections.
+    </div>
+  </div>
+
+  <p><b>FTP vs SFTP vs FTPS:</b></p>
+  <table>
+    <tr>
+      <th>Protocol</th>
+      <th>Encryption</th>
+      <th>Port</th>
+      <th>Security</th>
+    </tr>
+    <tr><td>FTP</td><td>None (plaintext)</td><td>21 / 20</td><td class="left">Credentials sent in clear text — NOT secure</td></tr>
+    <tr><td>FTPS</td><td>SSL/TLS</td><td>21 (implicit: 990)</td><td class="left">FTP with TLS encryption layer — secure</td></tr>
+    <tr><td>SFTP</td><td>SSH</td><td>22</td><td class="left">Completely different protocol over SSH — most secure</td></tr>
+  </table>
+
+  <p><b>Common FTP Commands:</b></p>
+  <table>
+    <tr><th>FTP Command</th><th class="left">Description</th></tr>
+    <tr><td class="cmd">ftp [IP]</td><td class="left">Connect to FTP server at the given IP address</td></tr>
+    <tr><td class="cmd">open [IP]</td><td class="left">Open a connection to an FTP server</td></tr>
+    <tr><td class="cmd">ls / dir</td><td class="left">List files and directories on the server</td></tr>
+    <tr><td class="cmd">get [filename]</td><td class="left">Download a file from the server to the local machine</td></tr>
+    <tr><td class="cmd">put [filename]</td><td class="left">Upload a file from the local machine to the server</td></tr>
+    <tr><td class="cmd">cd [dir]</td><td class="left">Change directory on the server</td></tr>
+    <tr><td class="cmd">mkdir [dir]</td><td class="left">Create a new directory on the server</td></tr>
+    <tr><td class="cmd">delete [file]</td><td class="left">Delete a file from the server</td></tr>
+    <tr><td class="cmd">bye / quit</td><td class="left">Disconnect from the FTP server and exit</td></tr>
+  </table>
+
+  <p><b>FTP User Permissions in Packet Tracer:</b></p>
+  <ul>
+    <li><b>Read:</b> View and download files only.</li>
+    <li><b>Write:</b> Upload files; create directories.</li>
+    <li><b>Delete:</b> Remove files from the server.</li>
+    <li><b>Rename:</b> Rename files on the server.</li>
+    <li><b>List:</b> List directory contents.</li>
+  </ul>
+
+  <h3>Apparatus / Requirements</h3>
+  <ul>
+    <li>Cisco Packet Tracer software</li>
+    <li>1 Server-PT (FTP Server), 1 Switch, 2 PC devices</li>
+    <li>Straight-through UTP cables</li>
+    <li>A test file pre-loaded on the server for download demonstration</li>
+  </ul>
+
+  <h3>Procedure</h3>
+  <ol>
+    <li><b>Build the Network Topology:</b>
+      <ul>
+        <li>Add 1 Server-PT, 1 Switch (2960), and 2 PCs. Connect all to the switch using straight-through cables.</li>
+      </ul>
+    </li>
+
+    <li><b>Assign Static IP to the FTP Server:</b>
+      <ul>
+        <li>Click Server → Desktop → IP Configuration → Static.</li>
+        <li>IP: <b>192.168.1.1</b>, Subnet Mask: <b>255.255.255.0</b>.</li>
+      </ul>
+    </li>
+
+    <li><b>Configure the FTP Service:</b>
+      <ul>
+        <li>Click Server → Services → FTP. Ensure FTP is turned <b>ON</b>.</li>
+        <li>Create a new FTP user:
+          <ul>
+            <li>Username: <b>pranay</b></li>
+            <li>Password: <b>lab123</b></li>
+            <li>Check all permissions: <b>Read, Write, Delete, Rename, List</b>.</li>
+            <li>Click <b>Add</b>.</li>
+          </ul>
+        </li>
+        <li>Note the default file <span class="cmd">sampleFile.txt</span> that exists on the server. If not visible, verify server files in the FTP files area.</li>
+      </ul>
+    </li>
+
+    <li><b>Configure PC1 (FTP Client):</b>
+      <ul>
+        <li>Desktop → IP Configuration → Static. IP: <b>192.168.1.10</b>, Subnet: 255.255.255.0.</li>
+      </ul>
+    </li>
+
+    <li><b>Configure PC2:</b> IP: <b>192.168.1.20</b>, Subnet: 255.255.255.0.</li>
+
+    <li><b>Connect to FTP Server from PC1:</b>
+      <ul>
+        <li>Desktop → Command Prompt. Type: <span class="cmd">ftp 192.168.1.1</span></li>
+        <li>Enter username: <b>pranay</b></li>
+        <li>Enter password: <b>lab123</b></li>
+        <li>You should see: <i>230 – Logged in.</i></li>
+      </ul>
+    </li>
+
+    <li><b>FTP Operations:</b>
+      <ul>
+        <li>List files on server: <span class="cmd">dir</span> — note the available files.</li>
+        <li>Download a file: <span class="cmd">get sampleFile.txt</span> — file is transferred to PC1.</li>
+        <li>Upload a file: <span class="cmd">put testReport.txt</span> — (a file that exists on PC1's flash memory). Note: In Packet Tracer, the file must exist on the virtual PC.</li>
+        <li>Rename a file: <span class="cmd">rename sampleFile.txt backupFile.txt</span></li>
+        <li>Delete a file: <span class="cmd">delete backupFile.txt</span></li>
+        <li>Verify operations: <span class="cmd">dir</span> — confirm changes.</li>
+        <li>Disconnect: <span class="cmd">bye</span></li>
+      </ul>
+    </li>
+
+    <li>Repeat the connection from PC2 to verify multi-client access to the same FTP server.</li>
+    <li>Document all FTP commands used and the server's response codes:
+      <table style="margin-top:5px">
+        <tr><th>Code</th><th class="left">Meaning</th></tr>
+        <tr><td>220</td><td class="left">Service ready (welcome message)</td></tr>
+        <tr><td>230</td><td class="left">User logged in successfully</td></tr>
+        <tr><td>226</td><td class="left">Transfer complete</td></tr>
+        <tr><td>227</td><td class="left">Entering passive mode</td></tr>
+        <tr><td>331</td><td class="left">Username OK, password required</td></tr>
+        <tr><td>530</td><td class="left">Not logged in / authentication failed</td></tr>
+        <tr><td>550</td><td class="left">File unavailable / not found</td></tr>
+      </table>
+    </li>
+  </ol>
+
+  <h3>Result</h3>
+  <div class="result">
+    <p>An FTP server was successfully configured in Cisco Packet Tracer with a user account (<b>pranay / lab123</b>) having full permissions (Read, Write, Delete, Rename, List). A client PC connected to the FTP server using the <span class="cmd">ftp</span> command. File download (<span class="cmd">get</span>), upload (<span class="cmd">put</span>), directory listing (<span class="cmd">dir</span>), rename, and delete operations were performed successfully. FTP response codes were observed and documented.</p>
+  </div>
+
+  <div class="sigs">
+    <span>Student Signature: ___________________________</span>
+    <span>Teacher Signature: ___________________________</span>
+    <span>Marks: _______ / 10</span>
+  </div>
+
+  <button class="print-btn" onclick="window.print()">&#128438; Print This Practical</button>
+</div>
+</body>
+</html>
