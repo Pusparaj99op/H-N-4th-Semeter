@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Practical 06 – OSI Reference Model</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Times New Roman', Times, serif; font-size: 11pt; background: #dce3ed; padding: 15px; }
+    .page { width: 210mm; margin: 0 auto; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.3); padding: 15mm 18mm; }
+    .header { border: 3px double #000; padding: 10px 14px; text-align: center; margin-bottom: 14px; }
+    .clg { font-size: 15pt; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+    .dept { font-size: 11.5pt; margin: 4px 0 2px; }
+    .subj { font-size: 10.5pt; }
+    hr.t { border: none; border-top: 2px solid #000; margin: 7px 0; }
+    .meta { display: flex; justify-content: space-between; font-size: 10pt; }
+    .prac-no { font-size: 13pt; font-weight: bold; text-align: center; text-decoration: underline; margin: 14px 0 10px; }
+    h3 { font-size: 11.5pt; font-weight: bold; text-decoration: underline; text-transform: uppercase; margin: 13px 0 5px; }
+    p { font-size: 10.5pt; line-height: 1.7; text-align: justify; margin-bottom: 4px; }
+    ul, ol { padding-left: 22px; margin: 4px 0; }
+    li { font-size: 10.5pt; line-height: 1.65; margin-bottom: 3px; text-align: justify; }
+    .result { border: 2px solid #000; padding: 10px; margin-top: 4px; background: #fafafa; }
+    .sigs { display: flex; justify-content: space-between; margin-top: 30px; font-size: 10.5pt; padding-top: 10px; border-top: 1px solid #000; }
+    table { width: 100%; border-collapse: collapse; margin: 7px 0; font-size: 10pt; }
+    th, td { border: 1px solid #000; padding: 5px 8px; }
+    th { background: #dde3ed; text-align: center; font-weight: bold; }
+    td.left { text-align: left; }
+    .l7 { background: #ffd6d6; }
+    .l6 { background: #ffecd6; }
+    .l5 { background: #fff8d6; }
+    .l4 { background: #d6ffd9; }
+    .l3 { background: #d6f0ff; }
+    .l2 { background: #ded6ff; }
+    .l1 { background: #ffd6f5; }
+    .print-btn { display: block; margin: 14px auto 0; padding: 7px 22px; background: #1a3c8f; color: #fff; border: none; border-radius: 4px; font-size: 10.5pt; cursor: pointer; }
+    .back-link { font-size: 10pt; margin-bottom: 10px; display: block; }
+    .mnemonic { background: #fff3cd; border: 1px solid #ffc107; padding: 6px 12px; font-size: 10.5pt; display: inline-block; margin: 5px 0; }
+    @media print {
+      body { background: #fff; padding: 0; }
+      .page { margin: 0; padding: 12mm 15mm; box-shadow: none; }
+      .print-btn, .back-link { display: none; }
+      @page { size: A4; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <a class="back-link" href="../index.html">&larr; Back to Index</a>
+
+  <div class="header">
+    <div class="clg">Your Engineering College Name</div>
+    <div class="dept">Department of Computer Science &amp; Engineering</div>
+    <div class="subj">Hardware &amp; Networking Lab &nbsp;|&nbsp; B.Tech CSE – 4th Semester</div>
+    <hr class="t">
+    <div class="meta">
+      <span>Name: <b>Pranay K Gajbhiye</b></span>
+      <span>Roll No: ___________</span>
+      <span>Batch: ___________</span>
+      <span>Date: ___________</span>
+    </div>
+  </div>
+
+  <div class="prac-no">Practical No. 06 – Study of the OSI Reference Model</div>
+
+  <h3>Aim</h3>
+  <p>To study the OSI (Open Systems Interconnection) reference model in detail, understand the function of each of its seven layers, and observe protocol-layer relationships using a packet analyser.</p>
+
+  <h3>Theory</h3>
+  <p><b>OSI Model:</b> The OSI model is a conceptual framework developed by ISO (International Organization for Standardization) in 1984 that standardises the communication functions of a network system into <b>seven distinct layers</b>. It ensures interoperability between different hardware and software products from different vendors.</p>
+
+  <div class="mnemonic">
+    <b>Mnemonic (Top to Bottom):</b> &nbsp;"<i>All People Seem To Need Data Processing</i>"<br>
+    A = Application &nbsp;| P = Presentation &nbsp;| S = Session &nbsp;| T = Transport &nbsp;| N = Network &nbsp;| D = Data Link &nbsp;| P = Physical
+  </div>
+
+  <table>
+    <tr>
+      <th>#</th>
+      <th>Layer Name</th>
+      <th>Data Unit</th>
+      <th>Key Protocols / Technologies</th>
+      <th>Devices</th>
+    </tr>
+    <tr class="l7">
+      <td><b>7</b></td>
+      <td><b>Application</b></td>
+      <td>Data / Message</td>
+      <td class="left">HTTP, HTTPS, FTP, SMTP, POP3, DNS, DHCP, SSH, Telnet</td>
+      <td>Gateway, Proxy, PC</td>
+    </tr>
+    <tr class="l6">
+      <td><b>6</b></td>
+      <td><b>Presentation</b></td>
+      <td>Data</td>
+      <td class="left">SSL/TLS, JPEG, MPEG, GIF, ASCII, EBCDIC, Encryption</td>
+      <td>—</td>
+    </tr>
+    <tr class="l5">
+      <td><b>5</b></td>
+      <td><b>Session</b></td>
+      <td>Data</td>
+      <td class="left">NetBIOS, RPC, SQL, NFS, SIP</td>
+      <td>—</td>
+    </tr>
+    <tr class="l4">
+      <td><b>4</b></td>
+      <td><b>Transport</b></td>
+      <td>Segment / Datagram</td>
+      <td class="left">TCP (connection-oriented), UDP (connectionless)</td>
+      <td>Firewall, Load Balancer</td>
+    </tr>
+    <tr class="l3">
+      <td><b>3</b></td>
+      <td><b>Network</b></td>
+      <td>Packet</td>
+      <td class="left">IP (IPv4/IPv6), ICMP, ARP, OSPF, BGP, RIP</td>
+      <td>Router, L3 Switch</td>
+    </tr>
+    <tr class="l2">
+      <td><b>2</b></td>
+      <td><b>Data Link</b></td>
+      <td>Frame</td>
+      <td class="left">Ethernet, Wi-Fi (802.11), PPP, ARP (MAC resolution)</td>
+      <td>Switch, Bridge</td>
+    </tr>
+    <tr class="l1">
+      <td><b>1</b></td>
+      <td><b>Physical</b></td>
+      <td>Bits</td>
+      <td class="left">Ethernet cables, Fibre optics, Wi-Fi radio, USB, DSL</td>
+      <td>Hub, Repeater, NIC, Cables</td>
+    </tr>
+  </table>
+
+  <p><b>Detailed Description of Each Layer:</b></p>
+
+  <p><b>Layer 7 – Application:</b> The topmost layer that provides network services directly to the end user's application (browser, email client). It handles protocols like HTTP for web browsing, SMTP for email, and FTP for file transfers.</p>
+
+  <p><b>Layer 6 – Presentation:</b> Responsible for data translation, encryption, and compression. It ensures data from the application layer of one system can be read by the application layer of another. Handles format conversion (e.g., EBCDIC to ASCII) and encryption (SSL/TLS).</p>
+
+  <p><b>Layer 5 – Session:</b> Manages establishing, maintaining, and terminating communication sessions between applications. Handles authentication, reconnection after interruption, and synchronisation (checkpoints).</p>
+
+  <p><b>Layer 4 – Transport:</b> Provides reliable end-to-end data delivery between processes. TCP provides error checking, sequencing, and flow control (connection-oriented). UDP is faster but connectionless with no guaranteed delivery.</p>
+
+  <p><b>Layer 3 – Network:</b> Handles logical addressing (IP addresses) and routing — determining the best path for data to travel from source to destination across multiple networks. Routers operate at this layer.</p>
+
+  <p><b>Layer 2 – Data Link:</b> Responsible for physical addressing (MAC addresses), framing, and error detection (CRC). Split into two sub-layers: LLC (Logical Link Control) and MAC (Media Access Control). Switches operate here.</p>
+
+  <p><b>Layer 1 – Physical:</b> Defines the physical medium for data transmission — electrical signals on copper, light pulses on fibre, radio waves for Wi-Fi. Defines voltages, pin layout, cable specifications, and bit rate.</p>
+
+  <h3>Apparatus / Requirements</h3>
+  <ul>
+    <li>Computer System with Windows OS</li>
+    <li>Wireshark (free network packet analyser — www.wireshark.org)</li>
+    <li>Active network connection (LAN/Wi-Fi)</li>
+    <li>Cisco Packet Tracer (optional, for OSI simulation)</li>
+  </ul>
+
+  <h3>Procedure</h3>
+  <ol>
+    <li>Draw the OSI model with all 7 layers and their data units in the journal.</li>
+    <li>Install and open <b>Wireshark</b> on the computer.</li>
+    <li>Select the active network interface (Ethernet or Wi-Fi) from the start screen.</li>
+    <li>Click the blue <b>shark-fin icon</b> (or press Ctrl+E) to start packet capture.</li>
+    <li>Open a browser and visit <b>http://www.google.com</b> to generate HTTP traffic.</li>
+    <li>Return to Wireshark and click the red <b>stop</b> button after a few seconds.</li>
+    <li>In the filter bar, type <span style="font-family:Consolas">http</span> or <span style="font-family:Consolas">tcp</span> and press Enter to filter relevant packets.</li>
+    <li>Click on a captured packet. In the <b>Packet Details</b> pane, expand each protocol layer:
+      <ul>
+        <li><b>Frame</b> → Physical layer info (frame size, arrival time)</li>
+        <li><b>Ethernet II</b> → Data Link layer (source/destination MAC addresses)</li>
+        <li><b>Internet Protocol</b> → Network layer (source/destination IP addresses, TTL)</li>
+        <li><b>Transmission Control Protocol</b> → Transport layer (port numbers, sequence/ack numbers)</li>
+        <li><b>Hypertext Transfer Protocol</b> → Application layer (HTTP GET request, headers)</li>
+      </ul>
+    </li>
+    <li>Record MAC addresses, IP addresses, port numbers, and HTTP request/response headers in your journal.</li>
+    <li>Take a screenshot of the packet details panel and document the findings.</li>
+  </ol>
+
+  <h3>Result</h3>
+  <div class="result">
+    <p>The OSI Reference Model was studied in detail. All 7 layers — Physical, Data Link, Network, Transport, Session, Presentation, and Application — were understood along with their functions, protocols, data units, and associated network devices. Practical demonstration using Wireshark confirmed the layered protocol structure in a real HTTP packet, where Ethernet (L2), IP (L3), TCP (L4), and HTTP (L7) layers were clearly identified.</p>
+  </div>
+
+  <div class="sigs">
+    <span>Student Signature: ___________________________</span>
+    <span>Teacher Signature: ___________________________</span>
+    <span>Marks: _______ / 10</span>
+  </div>
+
+  <button class="print-btn" onclick="window.print()">&#128438; Print This Practical</button>
+</div>
+</body>
+</html>
